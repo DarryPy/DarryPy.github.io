@@ -1,0 +1,9 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [{
+            "appID": "JVQNXV2Z82.com.mbank.canadia",
+            "paths": ["app/*","canadian/app/*"]
+            }]
+    }
+}
