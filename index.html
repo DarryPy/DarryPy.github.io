@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DarryPy · Backend Engineer</title>
+<meta name="description" content="DarryPy 的个人项目博客 — 后端 / 系统 / AI 工具集">
+<style>
+:root{
+  --bg-1:#06080f;
+  --bg-2:#0d1520;
+  --bg-3:#111e30;
+  --surface:rgba(17,30,48,.55);
+  --surface-2:rgba(17,30,48,.85);
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.18);
+  --t1:#f0f8ff;
+  --t2:#a6c1de;
+  --t3:#5b7693;
+  --blue:#38bdf8;
+  --purple:#c084fc;
+  --pink:#f472b6;
+  --green:#34d399;
+  --amber:#fbbf24;
+  --grad:linear-gradient(135deg,#38bdf8 0%,#818cf8 45%,#c084fc 100%);
+  --grad-soft:linear-gradient(135deg,rgba(56,189,248,.18),rgba(192,132,252,.18));
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg-1);
+  color:var(--t1);
+  line-height:1.65;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ===== 背景动效层 ===== */
+.bg-canvas{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(56,189,248,.18) 0%,transparent 35%),
+    radial-gradient(circle at 90% 100%,rgba(192,132,252,.18) 0%,transparent 35%),
+    radial-gradient(circle at 50% 50%,rgba(129,140,248,.12) 0%,transparent 50%),
+    linear-gradient(180deg,#06080f 0%,#0d1520 100%);
+}
+.bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.45;
+  animation:float 22s ease-in-out infinite;
+}
+.orb-1{width:520px;height:520px;background:#38bdf8;top:-180px;left:-160px;animation-delay:0s}
+.orb-2{width:480px;height:480px;background:#c084fc;bottom:-160px;right:-140px;animation-delay:-7s}
+.orb-3{width:380px;height:380px;background:#f472b6;top:50%;left:60%;animation-delay:-14s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(40px,-30px) scale(1.08)}
+  66%{transform:translate(-30px,30px) scale(.95)}
+}
+
+/* ===== 导航 ===== */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 32px;
+  background:rgba(6,8,15,.55);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px;font-size:15px}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--grad);box-shadow:0 0 16px rgba(56,189,248,.7)}
+.brand-name{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:24px}
+.nav-links a{color:var(--t2);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--t1)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ===== 通用容器 ===== */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+section{padding:96px 0;position:relative}
+.sec-tag{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--blue);
+  padding:6px 14px;
+  background:rgba(56,189,248,.1);
+  border:1px solid rgba(56,189,248,.3);
+  border-radius:999px;
+  margin-bottom:18px;
+}
+.sec-title{
+  font-size:38px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  margin-bottom:14px;
+  line-height:1.2;
+}
+.sec-desc{color:var(--t2);font-size:15px;max-width:640px;margin-bottom:48px}
+
+/* ===== Hero ===== */
+.hero{padding:120px 0 80px;text-align:left}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;letter-spacing:1.5px;
+  color:var(--green);
+  padding:6px 14px;
+  background:rgba(52,211,153,.1);
+  border:1px solid rgba(52,211,153,.28);
+  border-radius:999px;
+  margin-bottom:22px;
+}
+.hero-eyebrow::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+  animation:blink 1.8s ease-in-out infinite;
+}
+@keyframes blink{50%{opacity:.35}}
+
+.hero h1{
+  font-size:clamp(40px,7vw,76px);
+  font-weight:900;
+  letter-spacing:-2px;
+  line-height:1.05;
+  margin-bottom:18px;
+}
+.hero h1 .name{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 .role{color:var(--t1)}
+.hero .tagline{
+  font-size:clamp(16px,2vw,20px);
+  color:var(--t2);
+  max-width:620px;
+  margin-bottom:34px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 22px;
+  border-radius:12px;
+  font-size:14.5px;font-weight:700;
+  text-decoration:none;
+  border:1px solid transparent;
+  transition:transform .15s,box-shadow .2s,background .2s;
+  cursor:pointer;
+}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 6px 24px rgba(56,189,248,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(56,189,248,.4)}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--t1);border-color:var(--border-strong)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+
+.hero-meta{
+  margin-top:64px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+}
+.stat{
+  padding:18px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  backdrop-filter:blur(10px);
+}
+.stat-v{font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+
+/* ===== Projects ===== */
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:18px;
+}
+.card{
+  position:relative;
+  padding:24px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  transition:transform .2s,border-color .2s,box-shadow .25s;
+  overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;
+  inset:0;
+  background:var(--grad-soft);
+  opacity:0;transition:opacity .25s;
+  pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:var(--border-strong);
+  box-shadow:0 22px 48px rgba(0,0,0,.5),0 0 0 1px rgba(56,189,248,.15) inset;
+}
+.card:hover::before{opacity:.6}
+.card>*{position:relative;z-index:1}
+.card-tag{
+  display:inline-block;font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;
+  background:rgba(56,189,248,.12);
+  color:var(--blue);
+  border:1px solid rgba(56,189,248,.25);
+  margin-bottom:12px;
+}
+.card-tag.go{background:rgba(52,211,153,.12);color:var(--green);border-color:rgba(52,211,153,.25)}
+.card-tag.ai{background:rgba(192,132,252,.12);color:var(--purple);border-color:rgba(192,132,252,.25)}
+.card-tag.tool{background:rgba(251,191,36,.12);color:var(--amber);border-color:rgba(251,191,36,.3)}
+.card-title{font-size:18px;font-weight:800;margin-bottom:8px}
+.card-desc{color:var(--t2);font-size:13.5px;line-height:1.7;margin-bottom:14px;min-height:60px}
+.card-meta{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--t3)}
+.card-stack{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  font-size:10.5px;font-weight:600;
+  padding:3px 8px;border-radius:999px;
+  background:rgba(255,255,255,.05);
+  color:var(--t2);
+  border:1px solid var(--border);
+}
+
+/* ===== Tech stack ===== */
+.stack-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+}
+.stack{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:13.5px;font-weight:600;
+  transition:border-color .2s,transform .15s;
+}
+.stack:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.stack-icon{
+  width:34px;height:34px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--grad-soft);
+  font-size:16px;
+  font-weight:800;
+  color:var(--t1);
+}
+
+/* ===== Timeline ===== */
+.timeline{position:relative;margin-left:18px;padding-left:32px;border-left:2px solid var(--border)}
+.tl-item{position:relative;padding-bottom:32px}
+.tl-item::before{
+  content:'';position:absolute;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--grad);
+  left:-40px;top:6px;
+  box-shadow:0 0 0 4px var(--bg-1),0 0 16px rgba(56,189,248,.6);
+}
+.tl-date{font-size:12px;letter-spacing:1.5px;color:var(--blue);font-weight:700;margin-bottom:4px}
+.tl-h{font-size:16px;font-weight:700;margin-bottom:4px}
+.tl-d{font-size:13.5px;color:var(--t2)}
+
+/* ===== Footer ===== */
+footer{
+  padding:48px 24px;
+  text-align:center;
+  color:var(--t3);
+  font-size:13px;
+  border-top:1px solid var(--border);
+  background:rgba(6,8,15,.5);
+  backdrop-filter:blur(8px);
+}
+footer a{color:var(--t2);text-decoration:none;margin:0 8px}
+footer a:hover{color:var(--blue)}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;animation:fadeUp .7s ease forwards}
+.reveal.d1{animation-delay:.1s}
+.reveal.d2{animation-delay:.2s}
+.reveal.d3{animation-delay:.3s}
+.reveal.d4{animation-delay:.4s}
+
+.in-view{animation:fadeUp .7s ease forwards}
+
+@media(max-width:640px){
+  .nav{padding:14px 18px}
+  section{padding:64px 0}
+  .sec-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+  <div class="bg-canvas"></div>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <nav class="nav">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">DarryPy</span>
+    </div>
+    <div class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#projects">项目</a>
+      <a href="#stack">技术栈</a>
+      <a href="#timeline">动态</a>
+      <a href="#contact">联系</a>
+    </div>
+  </nav>
+
+  <header class="hero wrap">
+    <div class="hero-eyebrow reveal">在线 · 接受新项目讨论</div>
+    <h1 class="reveal d1">
+      <span class="name">DarryPy</span><br/>
+      <span class="role">Backend Engineer · 后端 / 系统 / AI 工具</span>
+    </h1>
+    <p class="tagline reveal d2">
+      用代码打磨稳定且优雅的系统。日常构建后端服务、数据迁移工具、运维自动化、AI Agent 实战。
+    </p>
+    <div class="hero-actions reveal d3">
+      <a href="#projects" class="btn btn-primary">查看项目 →</a>
+      <a href="https://github.com/DarryPy" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+    </div>
+
+    <div class="hero-meta reveal d4">
+      <div class="stat"><div class="stat-v">10+</div><div class="stat-l">Years Coding</div></div>
+      <div class="stat"><div class="stat-v">20+</div><div class="stat-l">Projects Shipped</div></div>
+      <div class="stat"><div class="stat-v">5+</div><div class="stat-l">Languages</div></div>
+      <div class="stat"><div class="stat-v">∞</div><div class="stat-l">Curiosity</div></div>
+    </div>
+  </header>
+
+  <section id="about" class="wrap">
+    <div class="sec-tag">About</div>
+    <h2 class="sec-title">关于我</h2>
+    <p class="sec-desc">
+      我是 DarryPy，一名后端工程师 / 组长。专注于高并发系统、数据治理、慢 SQL 优化、ClickHouse 迁移等场景。
+      平时也喜欢折腾 AI Agent、桌面自动化、个人工具链，把日常运维和管理流程通过工程化方式跑顺。
+    </p>
+  </section>
+
+  <section id="projects" class="wrap">
+    <div class="sec-tag">Projects</div>
+    <h2 class="sec-title">代表项目</h2>
+    <p class="sec-desc">下面这些是我最近正在做或维护的工作。</p>
+
+    <div class="proj-grid">
+      <div class="card">
+        <div class="card-tag ai">AI Agent</div>
+        <div class="card-title">OpenClaw 个人助手</div>
+        <div class="card-desc">基于 Claude / Codex 的本地 Agent 工作台，集成 Telegram、定时任务、技能体系、报告流水线。日常生成日报/周报、跨平台运维、群组答疑都跑在上面。</div>
+        <div class="card-meta">
+          <div class="card-stack">
+            <span class="chip">Node.js</span>
+            <span class="chip">Claude</span>
+            <span class="chip">Telegram</span>
+          </div>
+          <span>Active</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Backend</div>
+        <div class="card-title">视频推荐慢 SQL 治理</div>
+        <div class="card-desc">将视频推荐汇总查询从 MySQL 迁移到 ClickHouse，治理大数据量下的时延与告警，沉淀 ClickHouse 调用规范。</div>
+        <div class="card-meta">
+          <div class="card-stack">
+            <span class="chip">ClickHouse</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">Optimization</span>
+          </div>
+          <span>2026 Q2</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag go">Go</div>
+        <div class="card-title">埋点系统稳定性治理</div>
+        <div class="card-desc">系统性治理埋点上报：批量上报一致性、归属字段定时刷新、wal 日志连续性、压测瓶颈。配套输出"接口/数据/压测/日志"四象限检查表。</div>
+        <div class="card-meta">
+          <div class="card-stack">
+            <span class="chip">Go</span>
+            <span class="chip">zq-server</span>
+            <span class="chip">Observability</span>
+          </div>
+          <span>Active</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag tool">Tool</div>
+        <div class="card-title">技术体系工作报告填报</div>
+        <div class="card-desc">日报/周报/月报标准化生成器，支持组员、组长、主管多层级输出，并打通云端汇总 API，支持 Markdown / HTML 双导出。</div>
+        <div class="card-meta">
+          <div class="card-stack">
+            <span class="chip">HTML</span>
+            <span class="chip">JS</span>
+            <span class="chip">Workflow</span>
+          </div>
+          <span>2026</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Backend</div>
+        <div class="card-title">数据迁移与脚本治理</div>
+        <div class="card-desc">站点级数据迁移脚本、ClickHouse 调用方式优化、changestream 高并发缓存写入修复等线上稳定性工作。</div>
+        <div class="card-meta">
+          <div class="card-stack">
+            <span class="chip">Migration</span>
+            <span class="chip">MongoDB</span>
+            <span class="chip">Cache</span>
+          </div>
+          <span>2026</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag tool">Tool</div>
+        <div class="card-title">跨平台配置同步</div>
+        <div class="card-desc">openclaw-config 仓库 + sync.ps1 / sync.sh 双脚本，脱敏 + 备份 + 推送一条龙，跨 Windows / Mac / Linux 迁移开箱即用。</div>
+        <div class="card-meta">
+          <div class="card-stack">
+            <span class="chip">PowerShell</span>
+            <span class="chip">Bash</span>
+            <span class="chip">Git</span>
+          </div>
+          <span>2026-05</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" class="wrap">
+    <div class="sec-tag">Tech Stack</div>
+    <h2 class="sec-title">技术栈</h2>
+    <p class="sec-desc">日常使用 / 熟练度较高的工具与语言。</p>
+
+    <div class="stack-grid">
+      <div class="stack"><div class="stack-icon">N</div><span>Node.js</span></div>
+      <div class="stack"><div class="stack-icon">G</div><span>Go</span></div>
+      <div class="stack"><div class="stack-icon">M</div><span>MongoDB</span></div>
+      <div class="stack"><div class="stack-icon">C</div><span>ClickHouse</span></div>
+      <div class="stack"><div class="stack-icon">R</div><span>Redis</span></div>
+      <div class="stack"><div class="stack-icon">D</div><span>Docker</span></div>
+      <div class="stack"><div class="stack-icon">T</div><span>TypeScript</span></div>
+      <div class="stack"><div class="stack-icon">A</div><span>AI Agent</span></div>
+    </div>
+  </section>
+
+  <section id="timeline" class="wrap">
+    <div class="sec-tag">Updates</div>
+    <h2 class="sec-title">最近动态</h2>
+    <p class="sec-desc">一些正在做和近期完成的事。</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2026-05-22</div>
+        <div class="tl-h">openclaw-config 加 Mac/Linux 同步脚本</div>
+        <div class="tl-d">sync.sh 完成，跨平台 Git 自动同步、脱敏、可执行位、行尾保护一次到位。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-05-22</div>
+        <div class="tl-h">本周后端团队周报输出</div>
+        <div class="tl-d">22 项工作合并归档，沉淀圈子视频链路 + 埋点治理两条专项复盘。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-05</div>
+        <div class="tl-h">视频推荐慢 SQL → ClickHouse</div>
+        <div class="tl-d">汇总查询迁移完成 90%，下周完成全量切流并沉淀调用规范。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Ongoing</div>
+        <div class="tl-h">埋点系统稳定性治理</div>
+        <div class="tl-d">本周治理 6+ 项，正在输出系统级文档与分类统计规范。</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap" style="text-align:center;padding-bottom:120px">
+    <div class="sec-tag">Contact</div>
+    <h2 class="sec-title">来聊聊</h2>
+    <p class="sec-desc" style="margin:0 auto 32px">想聊技术、合作、或者随便扯扯，都可以找我。</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="https://github.com/DarryPy" target="_blank" rel="noopener" class="btn btn-primary">GitHub</a>
+      <a href="https://t.me/asher2050" target="_blank" rel="noopener" class="btn btn-ghost">Telegram</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 DarryPy · Built with ❤️ on GitHub Pages
+    <div style="margin-top:8px">
+      <a href="#about">关于</a>·<a href="#projects">项目</a>·<a href="#stack">技术栈</a>·<a href="https://github.com/DarryPy" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('section .card, section .stack, section .tl-item, .sec-tag, .sec-title, .sec-desc')
+      .forEach(el => { el.style.opacity = 0; io.observe(el); });
+  </script>
+</body>
+</html>
