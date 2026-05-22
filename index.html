@@ -2,7 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#06080f" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="format-detection" content="telephone=no" />
 <title>DarryPy · Backend Engineer</title>
 <meta name="description" content="DarryPy 的个人项目博客 — 后端 / 系统 / AI 工具集">
 <style>
@@ -26,8 +29,8 @@
   --grad-soft:linear-gradient(135deg,rgba(56,189,248,.18),rgba(192,132,252,.18));
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:var(--bg-1);
@@ -35,7 +38,12 @@ body{
   line-height:1.65;
   overflow-x:hidden;
   min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
+a,button{touch-action:manipulation}
+img{max-width:100%;height:auto;display:block}
 
 /* ===== 背景动效层 ===== */
 .bg-canvas{
@@ -82,10 +90,14 @@ body{
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px;font-size:15px}
 .brand-dot{width:10px;height:10px;border-radius:50%;background:var(--grad);box-shadow:0 0 16px rgba(56,189,248,.7)}
 .brand-name{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-links{display:flex;gap:24px}
-.nav-links a{color:var(--t2);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s}
-.nav-links a:hover{color:var(--t1)}
-@media(max-width:640px){.nav-links{display:none}}
+.nav-links{display:flex;gap:24px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;max-width:60%}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{color:var(--t2);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;white-space:nowrap;padding:6px 2px}
+.nav-links a:hover,.nav-links a:active{color:var(--t1)}
+@media(max-width:640px){
+  .nav-links{gap:16px;font-size:13px;max-width:65%}
+  .nav-links a{font-size:13px}
+}
 
 /* ===== 通用容器 ===== */
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
@@ -298,10 +310,72 @@ footer a:hover{color:var(--blue)}
 
 .in-view{animation:fadeUp .7s ease forwards}
 
+/* ===== 响应式：平板 ===== */
+@media(max-width:900px){
+  .wrap{padding:0 20px}
+  section{padding:72px 0}
+  .hero{padding:80px 0 60px}
+  .sec-title{font-size:30px}
+  .proj-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .hero-meta{margin-top:48px;gap:10px}
+  .stat{padding:14px 16px}
+  .stat-v{font-size:22px}
+}
+
+/* ===== 响应式：手机 ===== */
 @media(max-width:640px){
-  .nav{padding:14px 18px}
-  section{padding:64px 0}
-  .sec-title{font-size:28px}
+  .nav{padding:12px 16px}
+  .brand{font-size:14px}
+  .wrap{padding:0 16px}
+  section{padding:56px 0}
+  .hero{padding:60px 0 40px}
+  .hero-eyebrow{font-size:11px;padding:5px 11px;margin-bottom:18px}
+  .hero h1{letter-spacing:-1px;margin-bottom:14px}
+  .hero .tagline{font-size:15px;margin-bottom:26px}
+  .hero-actions{gap:10px;flex-direction:column;align-items:stretch}
+  .btn{justify-content:center;padding:14px 22px;font-size:14.5px;width:100%}
+  .hero-meta{margin-top:40px;grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat{padding:14px}
+  .stat-v{font-size:20px}
+  .stat-l{font-size:10.5px;letter-spacing:1.2px}
+  .sec-tag{font-size:10.5px;letter-spacing:2.2px;padding:5px 12px;margin-bottom:14px}
+  .sec-title{font-size:26px;margin-bottom:10px}
+  .sec-desc{font-size:14px;margin-bottom:34px}
+  .proj-grid{grid-template-columns:1fr;gap:12px}
+  .card{padding:20px;border-radius:14px}
+  .card-desc{min-height:auto}
+  .stack-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stack{padding:12px 14px;font-size:13px}
+  .stack-icon{width:30px;height:30px;font-size:14px}
+  .timeline{margin-left:6px;padding-left:24px}
+  .tl-item::before{left:-32px;width:12px;height:12px}
+  #contact{padding-bottom:80px}
+  /* 移动端不要靠 blur orbs 太狠，省电 + 防卡顿 */
+  .orb{filter:blur(60px);opacity:.38;animation-duration:30s}
+  .orb-1{width:340px;height:340px}
+  .orb-2{width:320px;height:320px}
+  .orb-3{width:280px;height:280px}
+  footer{padding:36px 18px;font-size:12.5px}
+}
+
+/* ===== 超窄屏 ===== */
+@media(max-width:380px){
+  .hero h1{font-size:36px}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .stack-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== 减少动画偏好 ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .orb{animation:none}
+}
+
+/* ===== 横屏手机 ===== */
+@media(max-height:480px) and (orientation:landscape){
+  .hero{padding:32px 0 24px}
+  .hero h1{font-size:36px}
+  section{padding:40px 0}
 }
 </style>
 </head>
