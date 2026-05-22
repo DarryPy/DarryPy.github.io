@@ -2,6 +2,11 @@ title: DarryPy
 description: DarryPy 的个人博客 — 后端 / 系统 / AI 工具
 include: [".well-known"]
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
 permalink: /:title.html
 defaults:
   - scope:
@@ -11,3 +16,15 @@ defaults:
 exclude:
   - README.md
   - .gitattributes
+
+# giscus 评论：填入下面 4 个字段即可启用。
+# 启用步骤：
+# 1. GitHub repo → Settings → Features → 勾选 Discussions
+# 2. 安装 https://github.com/apps/giscus 给本 repo
+# 3. 到 https://giscus.app 配置并复制 data-repo-id / data-category-id
+# 4. 填到下面后重新部署
+giscus:
+  repo: DarryPy/DarryPy.github.io
+  repo_id: ""
+  category: General
+  category_id: ""

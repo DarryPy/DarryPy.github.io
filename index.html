@@ -238,6 +238,23 @@ footer a:hover{color:var(--blue)}
 
 .in-view{animation:fadeUp .7s ease forwards}
 
+/* ===== mouse spotlight (hover-capable devices only) ===== */
+.mouse-light{
+  position:fixed;top:0;left:0;
+  width:520px;height:520px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.15) 0%,rgba(129,140,248,.06) 35%,transparent 65%);
+  pointer-events:none;
+  z-index:0;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  transition:opacity .35s;
+  mix-blend-mode:screen;
+  will-change:transform;
+}
+.mouse-light.visible{opacity:1}
+@media (hover: none),(max-width:768px){.mouse-light{display:none!important}}
+
 /* ===== 响应式：平板 ===== */
 @media(max-width:900px){
   .wrap{padding:0 20px}
@@ -303,6 +320,7 @@ footer a:hover{color:var(--blue)}
 </style>
 </head>
 <body>
+  <div class="mouse-light"></div>
   <div class="bg-canvas"></div>
   <div class="bg-orbs">
     <div class="orb orb-1"></div>
@@ -388,6 +406,7 @@ footer a:hover{color:var(--blue)}
   </footer>
 
   <script>
+    // 入场动画
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -398,6 +417,24 @@ footer a:hover{color:var(--blue)}
     }, { threshold: 0.12 });
     document.querySelectorAll('section .post-row, .sec-tag, .sec-title, .sec-desc')
       .forEach(el => { el.style.opacity = 0; io.observe(el); });
+
+    // 鼠标跟随光圈（仅 hover-capable 设备）
+    (function(){
+      const light = document.querySelector('.mouse-light');
+      if (!light || !window.matchMedia('(hover: hover)').matches) return;
+      let tx = innerWidth/2, ty = innerHeight/2, cx = tx, cy = ty, visible = false;
+      addEventListener('mousemove', e => {
+        tx = e.clientX; ty = e.clientY;
+        if (!visible) { light.classList.add('visible'); visible = true; }
+      });
+      function tick(){
+        cx += (tx - cx) * 0.14;
+        cy += (ty - cy) * 0.14;
+        light.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
   </script>
 </body>
 </html>
