@@ -1,4 +1,13 @@
-theme: jekyll-theme-midnight
-title: Octocat's homepage
-description: Bookmark this to keep an eye on my project updates!
+title: DarryPy
+description: DarryPy 的个人博客 — 后端 / 系统 / AI 工具
 include: [".well-known"]
+markdown: kramdown
+permalink: /:title.html
+defaults:
+  - scope:
+      path: "posts"
+    values:
+      layout: post
+exclude:
+  - README.md
+  - .gitattributes

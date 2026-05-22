@@ -175,115 +175,40 @@ section{padding:96px 0;position:relative}
 .btn-ghost{background:rgba(255,255,255,.04);color:var(--t1);border-color:var(--border-strong)}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
 
-.hero-meta{
-  margin-top:64px;
+/* ===== Posts list ===== */
+.posts-list{display:flex;flex-direction:column;gap:12px}
+.post-row{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:14px;
-}
-.stat{
-  padding:18px 20px;
+  grid-template-columns:120px 1fr 30px;
+  align-items:center;
+  gap:18px;
+  padding:18px 22px;
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:14px;
-  backdrop-filter:blur(10px);
+  text-decoration:none;
+  color:inherit;
+  transition:transform .15s,border-color .2s,background .2s;
+  backdrop-filter:blur(12px);
 }
-.stat-v{font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-l{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
-
-/* ===== Projects ===== */
-.proj-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:18px;
-}
-.card{
-  position:relative;
-  padding:24px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  transition:transform .2s,border-color .2s,box-shadow .25s;
-  overflow:hidden;
-}
-.card::before{
-  content:'';position:absolute;
-  inset:0;
-  background:var(--grad-soft);
-  opacity:0;transition:opacity .25s;
-  pointer-events:none;
-}
-.card:hover{
-  transform:translateY(-6px);
+.post-row:hover{
+  transform:translateX(4px);
   border-color:var(--border-strong);
-  box-shadow:0 22px 48px rgba(0,0,0,.5),0 0 0 1px rgba(56,189,248,.15) inset;
+  background:var(--surface-2);
 }
-.card:hover::before{opacity:.6}
-.card>*{position:relative;z-index:1}
-.card-tag{
-  display:inline-block;font-size:11px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;
-  padding:4px 10px;border-radius:6px;
-  background:rgba(56,189,248,.12);
-  color:var(--blue);
-  border:1px solid rgba(56,189,248,.25);
-  margin-bottom:12px;
+.post-row:hover .post-arrow{transform:translateX(4px);color:var(--blue)}
+.post-date{
+  font-size:12px;letter-spacing:1.5px;color:var(--blue);font-weight:700;
+  font-variant-numeric:tabular-nums;
 }
-.card-tag.go{background:rgba(52,211,153,.12);color:var(--green);border-color:rgba(52,211,153,.25)}
-.card-tag.ai{background:rgba(192,132,252,.12);color:var(--purple);border-color:rgba(192,132,252,.25)}
-.card-tag.tool{background:rgba(251,191,36,.12);color:var(--amber);border-color:rgba(251,191,36,.3)}
-.card-title{font-size:18px;font-weight:800;margin-bottom:8px}
-.card-desc{color:var(--t2);font-size:13.5px;line-height:1.7;margin-bottom:14px;min-height:60px}
-.card-meta{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--t3)}
-.card-stack{display:flex;gap:6px;flex-wrap:wrap}
-.chip{
-  font-size:10.5px;font-weight:600;
-  padding:3px 8px;border-radius:999px;
-  background:rgba(255,255,255,.05);
-  color:var(--t2);
-  border:1px solid var(--border);
+.post-body{min-width:0}
+.post-title{font-size:16px;font-weight:700;margin-bottom:3px;color:var(--t1)}
+.post-excerpt{font-size:13.5px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.post-arrow{
+  font-size:20px;color:var(--t3);
+  transition:transform .2s,color .2s;
+  text-align:right;
 }
-
-/* ===== Tech stack ===== */
-.stack-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-}
-.stack{
-  display:flex;align-items:center;gap:10px;
-  padding:14px 16px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:12px;
-  font-size:13.5px;font-weight:600;
-  transition:border-color .2s,transform .15s;
-}
-.stack:hover{border-color:var(--border-strong);transform:translateY(-2px)}
-.stack-icon{
-  width:34px;height:34px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--grad-soft);
-  font-size:16px;
-  font-weight:800;
-  color:var(--t1);
-}
-
-/* ===== Timeline ===== */
-.timeline{position:relative;margin-left:18px;padding-left:32px;border-left:2px solid var(--border)}
-.tl-item{position:relative;padding-bottom:32px}
-.tl-item::before{
-  content:'';position:absolute;
-  width:14px;height:14px;border-radius:50%;
-  background:var(--grad);
-  left:-40px;top:6px;
-  box-shadow:0 0 0 4px var(--bg-1),0 0 16px rgba(56,189,248,.6);
-}
-.tl-date{font-size:12px;letter-spacing:1.5px;color:var(--blue);font-weight:700;margin-bottom:4px}
-.tl-h{font-size:16px;font-weight:700;margin-bottom:4px}
-.tl-d{font-size:13.5px;color:var(--t2)}
 
 /* ===== Footer ===== */
 footer{
@@ -316,10 +241,6 @@ footer a:hover{color:var(--blue)}
   section{padding:72px 0}
   .hero{padding:80px 0 60px}
   .sec-title{font-size:30px}
-  .proj-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-  .hero-meta{margin-top:48px;gap:10px}
-  .stat{padding:14px 16px}
-  .stat-v{font-size:22px}
 }
 
 /* ===== 响应式：手机 ===== */
@@ -334,21 +255,22 @@ footer a:hover{color:var(--blue)}
   .hero .tagline{font-size:15px;margin-bottom:26px}
   .hero-actions{gap:10px;flex-direction:column;align-items:stretch}
   .btn{justify-content:center;padding:14px 22px;font-size:14.5px;width:100%}
-  .hero-meta{margin-top:40px;grid-template-columns:repeat(2,1fr);gap:10px}
-  .stat{padding:14px}
-  .stat-v{font-size:20px}
-  .stat-l{font-size:10.5px;letter-spacing:1.2px}
   .sec-tag{font-size:10.5px;letter-spacing:2.2px;padding:5px 12px;margin-bottom:14px}
   .sec-title{font-size:26px;margin-bottom:10px}
   .sec-desc{font-size:14px;margin-bottom:34px}
-  .proj-grid{grid-template-columns:1fr;gap:12px}
-  .card{padding:20px;border-radius:14px}
-  .card-desc{min-height:auto}
-  .stack-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .stack{padding:12px 14px;font-size:13px}
-  .stack-icon{width:30px;height:30px;font-size:14px}
-  .timeline{margin-left:6px;padding-left:24px}
-  .tl-item::before{left:-32px;width:12px;height:12px}
+  .post-row{
+    grid-template-columns:1fr 24px;
+    grid-template-rows:auto auto;
+    grid-template-areas:'date arrow' 'body body';
+    gap:10px 12px;
+    padding:16px 18px;
+    border-radius:12px;
+  }
+  .post-row .post-date{grid-area:date;font-size:11.5px}
+  .post-row .post-body{grid-area:body}
+  .post-row .post-arrow{grid-area:arrow;font-size:18px}
+  .post-title{font-size:15.5px}
+  .post-excerpt{white-space:normal;font-size:13px;line-height:1.6}
   #contact{padding-bottom:80px}
   /* 移动端不要靠 blur orbs 太狠，省电 + 防卡顿 */
   .orb{filter:blur(60px);opacity:.38;animation-duration:30s}
@@ -361,8 +283,6 @@ footer a:hover{color:var(--blue)}
 /* ===== 超窄屏 ===== */
 @media(max-width:380px){
   .hero h1{font-size:36px}
-  .hero-meta{grid-template-columns:1fr 1fr}
-  .stack-grid{grid-template-columns:1fr 1fr}
 }
 
 /* ===== 减少动画偏好 ===== */
@@ -394,9 +314,7 @@ footer a:hover{color:var(--blue)}
     </div>
     <div class="nav-links">
       <a href="#about">关于</a>
-      <a href="#projects">项目</a>
-      <a href="#stack">技术栈</a>
-      <a href="#timeline">动态</a>
+      <a href="#posts">文章</a>
       <a href="#contact">联系</a>
     </div>
   </nav>
@@ -411,15 +329,8 @@ footer a:hover{color:var(--blue)}
       用代码打磨稳定且优雅的系统。日常构建后端服务、数据迁移工具、运维自动化、AI Agent 实战。
     </p>
     <div class="hero-actions reveal d3">
-      <a href="#projects" class="btn btn-primary">查看项目 →</a>
+      <a href="#posts" class="btn btn-primary">开始阅读 →</a>
       <a href="https://github.com/DarryPy" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
-    </div>
-
-    <div class="hero-meta reveal d4">
-      <div class="stat"><div class="stat-v">10+</div><div class="stat-l">Years Coding</div></div>
-      <div class="stat"><div class="stat-v">20+</div><div class="stat-l">Projects Shipped</div></div>
-      <div class="stat"><div class="stat-v">5+</div><div class="stat-l">Languages</div></div>
-      <div class="stat"><div class="stat-v">∞</div><div class="stat-l">Curiosity</div></div>
     </div>
   </header>
 
@@ -432,141 +343,20 @@ footer a:hover{color:var(--blue)}
     </p>
   </section>
 
-  <section id="projects" class="wrap">
-    <div class="sec-tag">Projects</div>
-    <h2 class="sec-title">代表项目</h2>
-    <p class="sec-desc">下面这些是我最近正在做或维护的工作。</p>
+  <section id="posts" class="wrap">
+    <div class="sec-tag">Posts</div>
+    <h2 class="sec-title">最新文章</h2>
+    <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
 
-    <div class="proj-grid">
-      <div class="card">
-        <div class="card-tag ai">AI Agent</div>
-        <div class="card-title">OpenClaw 个人助手</div>
-        <div class="card-desc">基于 Claude / Codex 的本地 Agent 工作台，集成 Telegram、定时任务、技能体系、报告流水线。日常生成日报/周报、跨平台运维、群组答疑都跑在上面。</div>
-        <div class="card-meta">
-          <div class="card-stack">
-            <span class="chip">Node.js</span>
-            <span class="chip">Claude</span>
-            <span class="chip">Telegram</span>
-          </div>
-          <span>Active</span>
+    <div class="posts-list">
+      <a class="post-row" href="posts/2026-05-23-hello-blog.html">
+        <div class="post-date">2026-05-23</div>
+        <div class="post-body">
+          <div class="post-title">博客上线 — 给自己留一个安静的写字角</div>
+          <div class="post-excerpt">为什么在 GitHub Pages 起一个个人博客，以及这个页面背后的小心思。</div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-tag">Backend</div>
-        <div class="card-title">视频推荐慢 SQL 治理</div>
-        <div class="card-desc">将视频推荐汇总查询从 MySQL 迁移到 ClickHouse，治理大数据量下的时延与告警，沉淀 ClickHouse 调用规范。</div>
-        <div class="card-meta">
-          <div class="card-stack">
-            <span class="chip">ClickHouse</span>
-            <span class="chip">MySQL</span>
-            <span class="chip">Optimization</span>
-          </div>
-          <span>2026 Q2</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-tag go">Go</div>
-        <div class="card-title">埋点系统稳定性治理</div>
-        <div class="card-desc">系统性治理埋点上报：批量上报一致性、归属字段定时刷新、wal 日志连续性、压测瓶颈。配套输出"接口/数据/压测/日志"四象限检查表。</div>
-        <div class="card-meta">
-          <div class="card-stack">
-            <span class="chip">Go</span>
-            <span class="chip">zq-server</span>
-            <span class="chip">Observability</span>
-          </div>
-          <span>Active</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tool">Tool</div>
-        <div class="card-title">技术体系工作报告填报</div>
-        <div class="card-desc">日报/周报/月报标准化生成器，支持组员、组长、主管多层级输出，并打通云端汇总 API，支持 Markdown / HTML 双导出。</div>
-        <div class="card-meta">
-          <div class="card-stack">
-            <span class="chip">HTML</span>
-            <span class="chip">JS</span>
-            <span class="chip">Workflow</span>
-          </div>
-          <span>2026</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-tag">Backend</div>
-        <div class="card-title">数据迁移与脚本治理</div>
-        <div class="card-desc">站点级数据迁移脚本、ClickHouse 调用方式优化、changestream 高并发缓存写入修复等线上稳定性工作。</div>
-        <div class="card-meta">
-          <div class="card-stack">
-            <span class="chip">Migration</span>
-            <span class="chip">MongoDB</span>
-            <span class="chip">Cache</span>
-          </div>
-          <span>2026</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tool">Tool</div>
-        <div class="card-title">跨平台配置同步</div>
-        <div class="card-desc">openclaw-config 仓库 + sync.ps1 / sync.sh 双脚本，脱敏 + 备份 + 推送一条龙，跨 Windows / Mac / Linux 迁移开箱即用。</div>
-        <div class="card-meta">
-          <div class="card-stack">
-            <span class="chip">PowerShell</span>
-            <span class="chip">Bash</span>
-            <span class="chip">Git</span>
-          </div>
-          <span>2026-05</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="stack" class="wrap">
-    <div class="sec-tag">Tech Stack</div>
-    <h2 class="sec-title">技术栈</h2>
-    <p class="sec-desc">日常使用 / 熟练度较高的工具与语言。</p>
-
-    <div class="stack-grid">
-      <div class="stack"><div class="stack-icon">N</div><span>Node.js</span></div>
-      <div class="stack"><div class="stack-icon">G</div><span>Go</span></div>
-      <div class="stack"><div class="stack-icon">M</div><span>MongoDB</span></div>
-      <div class="stack"><div class="stack-icon">C</div><span>ClickHouse</span></div>
-      <div class="stack"><div class="stack-icon">R</div><span>Redis</span></div>
-      <div class="stack"><div class="stack-icon">D</div><span>Docker</span></div>
-      <div class="stack"><div class="stack-icon">T</div><span>TypeScript</span></div>
-      <div class="stack"><div class="stack-icon">A</div><span>AI Agent</span></div>
-    </div>
-  </section>
-
-  <section id="timeline" class="wrap">
-    <div class="sec-tag">Updates</div>
-    <h2 class="sec-title">最近动态</h2>
-    <p class="sec-desc">一些正在做和近期完成的事。</p>
-
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-date">2026-05-22</div>
-        <div class="tl-h">openclaw-config 加 Mac/Linux 同步脚本</div>
-        <div class="tl-d">sync.sh 完成，跨平台 Git 自动同步、脱敏、可执行位、行尾保护一次到位。</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2026-05-22</div>
-        <div class="tl-h">本周后端团队周报输出</div>
-        <div class="tl-d">22 项工作合并归档，沉淀圈子视频链路 + 埋点治理两条专项复盘。</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2026-05</div>
-        <div class="tl-h">视频推荐慢 SQL → ClickHouse</div>
-        <div class="tl-d">汇总查询迁移完成 90%，下周完成全量切流并沉淀调用规范。</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">Ongoing</div>
-        <div class="tl-h">埋点系统稳定性治理</div>
-        <div class="tl-d">本周治理 6+ 项，正在输出系统级文档与分类统计规范。</div>
-      </div>
+        <div class="post-arrow">→</div>
+      </a>
     </div>
   </section>
 
@@ -583,7 +373,7 @@ footer a:hover{color:var(--blue)}
   <footer>
     © 2026 DarryPy · Built with ❤️ on GitHub Pages
     <div style="margin-top:8px">
-      <a href="#about">关于</a>·<a href="#projects">项目</a>·<a href="#stack">技术栈</a>·<a href="https://github.com/DarryPy" target="_blank" rel="noopener">GitHub</a>
+      <a href="#about">关于</a>·<a href="#posts">文章</a>·<a href="https://github.com/DarryPy" target="_blank" rel="noopener">GitHub</a>
     </div>
   </footer>
 
@@ -596,7 +386,7 @@ footer a:hover{color:var(--blue)}
         }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll('section .card, section .stack, section .tl-item, .sec-tag, .sec-title, .sec-desc')
+    document.querySelectorAll('section .post-row, .sec-tag, .sec-title, .sec-desc')
       .forEach(el => { el.style.opacity = 0; io.observe(el); });
   </script>
 </body>
