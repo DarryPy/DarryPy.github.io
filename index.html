@@ -1,3 +1,6 @@
+---
+# Jekyll front matter (intentionally empty) — its presence makes Jekyll process this file as a template.
+---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -349,14 +352,21 @@ footer a:hover{color:var(--blue)}
     <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
 
     <div class="posts-list">
-      <a class="post-row" href="posts/2026-05-23-hello-blog.html">
-        <div class="post-date">2026-05-23</div>
-        <div class="post-body">
-          <div class="post-title">博客上线 — 给自己留一个安静的写字角</div>
-          <div class="post-excerpt">为什么在 GitHub Pages 起一个个人博客，以及这个页面背后的小心思。</div>
-        </div>
-        <div class="post-arrow">→</div>
-      </a>
+      {%- assign blog_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
+      {%- if blog_posts.size == 0 -%}
+        <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
+      {%- else -%}
+        {%- for post in blog_posts -%}
+        <a class="post-row" href="{{ post.url | relative_url }}">
+          <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+          <div class="post-body">
+            <div class="post-title">{{ post.title }}</div>
+            <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+          </div>
+          <div class="post-arrow">→</div>
+        </a>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </section>
 
