@@ -120,11 +120,3 @@ RAG（Retrieval-Augmented Generation）的思路简单：**先检索相关片段
 3. **chunk 太大**——一个 chunk 同时包含几个不相关主题，向量平均后什么都不像
 4. **chunk 太小**——失去上下文，模型回答支离破碎
 5. **忽略 prompt 部分**——再好的检索，如果 prompt 不让模型基于片段回答，照样幻觉
-
----
-
-参考资料：
-- [RAG Architectures Every AI Developer Must Know in 2026](https://medium.com/@angelosorte1/rag-architectures-every-ai-developer-must-know-in-2026-a-complete-guide-with-examples-ea59471aeb01)
-- [RAG Production Guide 2026 — Lushbinary](https://lushbinary.com/blog/rag-retrieval-augmented-generation-production-guide/)
-- [RAG Architecture: 4 Key Components — Cloudian](https://cloudian.com/guides/ai-infrastructure/rag-architecture-4-key-components-example-implementation-2026/)
-- [RAG Architecture Explained — orq.ai](https://orq.ai/blog/rag-architecture)

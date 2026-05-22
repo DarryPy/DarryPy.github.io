@@ -136,11 +136,3 @@ Claude 在训练时见过大量 XML 风格的结构化输入，对 `<tag>` 这�
 ```
 
 把这个模板套上去，大部分新场景都能跑出能用的初版，再针对失败案例迭代就行。
-
----
-
-参考资料：
-- [Prompting best practices — Claude API Docs](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)
-- [Prompt engineering overview — Claude API Docs](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview)
-- [Anthropic Interactive Prompt Engineering Tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial)
-- [Best practices for prompt engineering — Claude](https://claude.com/blog/best-practices-for-prompt-engineering)

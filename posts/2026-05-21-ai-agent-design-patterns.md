@@ -170,12 +170,3 @@ Generate → Critique → Revise
 能用一个 prompt 解决的，不要拆成 agent；能用 5 个 prompt 串起来的，不要套 ReAct；能用 ReAct 跑通的，不要硬上 multi-agent。
 
 复杂度是负债，不是资产。
-
----
-
-参考资料：
-- [5 Agent Design Patterns Every Developer Needs to Know in 2026 — dev.to](https://dev.to/ljhao/5-agent-design-patterns-every-developer-needs-to-know-in-2026-17d8)
-- [Agentic AI Design Patterns in 2026: ReAct, Reflection & Tool Use — Innovatrix](https://www.innovatrixinfotech.com/blog/agentic-ai-design-patterns-react-reflection-tool-use)
-- [The 7 Agentic AI Design Patterns Every Developer Should Know — dev.to](https://dev.to/emperorakashi20/the-7-agentic-ai-design-patterns-every-developer-should-know-react-reflection-tool-use-and-more-3bba)
-- [Agentic Design Patterns: The 2026 Guide — SitePoint](https://www.sitepoint.com/the-definitive-guide-to-agentic-design-patterns-in-2026/)
-- [AI Agent Architecture: Build Systems That Work in 2026 — Redis](https://redis.io/blog/ai-agent-architecture/)
