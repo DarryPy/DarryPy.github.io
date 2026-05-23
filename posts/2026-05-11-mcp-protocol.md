@@ -2,7 +2,7 @@
 layout: post
 title: MCP 协议入门 — 让 AI Agent 之间互通的开放标准
 date: 2026-05-11
-category: "Agent 与工具"
+topic: "Agent 与工具"
 tags: [AI, MCP, Agent, 协议]
 excerpt: Model Context Protocol 是 Anthropic 提的开放协议，正在变成 agent 工具集成的事实标准。看看它解决什么问题、怎么写一个 MCP server。
 permalink: /posts/2026-05-11-mcp-protocol.html

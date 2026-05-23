@@ -2,7 +2,7 @@
 layout: post
 title: LLM 流式响应实战 — SSE / WebSocket / fetch streaming 怎么选
 date: 2026-05-03
-category: "工程实战"
+topic: "工程实战"
 tags: [AI, Streaming, SSE, 前端]
 excerpt: "等几秒才出字" 的 LLM 体验跟 ChatGPT 那种打字机感觉差天差地。流式实现怎么做，三种协议怎么选。
 permalink: /posts/2026-05-03-streaming-sse.html

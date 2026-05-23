@@ -2,7 +2,7 @@
 layout: post
 title: 结构化输出 (Structured Output) 实战 — 让 LLM 稳定吐 JSON
 date: 2026-05-05
-category: "Prompt 与推理"
+topic: "Prompt 与推理"
 tags: [AI, JSON, Structured Output, 工程实践]
 excerpt: 让 LLM 输出 JSON 不再"有时合法、有时不合法"。JSON mode、schema 约束、function calling 三种路径横向对比。
 permalink: /posts/2026-05-05-structured-output.html

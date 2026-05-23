@@ -393,21 +393,21 @@ footer a:hover{color:var(--blue)}
     <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
 
     {%- assign blog_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
-    {%- assign categories = "Prompt 与推理,RAG 与检索,Agent 与工具,评估与安全,模型与训练,工程实战" | split: "," -%}
+    {%- assign topics = "Prompt 与推理,RAG 与检索,Agent 与工具,评估与安全,模型与训练,工程实战" | split: "," -%}
 
     {%- if blog_posts.size == 0 -%}
       <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
     {%- else -%}
-      {%- for cat in categories -%}
-        {%- assign cat_posts = blog_posts | where: "category", cat -%}
-        {%- if cat_posts.size > 0 -%}
+      {%- for t in topics -%}
+        {%- assign topic_posts = blog_posts | where: "topic", t -%}
+        {%- if topic_posts.size > 0 -%}
         <div class="category">
           <div class="category-header">
-            <span class="category-title">{{ cat }}</span>
-            <span class="category-count">{{ cat_posts.size }} 篇</span>
+            <span class="category-title">{{ t }}</span>
+            <span class="category-count">{{ topic_posts.size }} 篇</span>
           </div>
           <div class="posts-list">
-            {%- for post in cat_posts -%}
+            {%- for post in topic_posts -%}
             <a class="post-row" href="{{ post.url | relative_url }}">
               <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
               <div class="post-body">
@@ -421,29 +421,6 @@ footer a:hover{color:var(--blue)}
         </div>
         {%- endif -%}
       {%- endfor -%}
-
-      {%- comment -%} 没分类的兜底 {%- endcomment -%}
-      {%- assign uncat = blog_posts | where_exp: "p", "p.category == nil or p.category == ''" -%}
-      {%- if uncat.size > 0 -%}
-      <div class="category">
-        <div class="category-header">
-          <span class="category-title">其他</span>
-          <span class="category-count">{{ uncat.size }} 篇</span>
-        </div>
-        <div class="posts-list">
-          {%- for post in uncat -%}
-          <a class="post-row" href="{{ post.url | relative_url }}">
-            <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
-            <div class="post-body">
-              <div class="post-title">{{ post.title }}</div>
-              <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
-            </div>
-            <div class="post-arrow">→</div>
-          </a>
-          {%- endfor -%}
-        </div>
-      </div>
-      {%- endif -%}
     {%- endif -%}
   </section>
 

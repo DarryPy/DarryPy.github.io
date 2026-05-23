@@ -2,7 +2,7 @@
 layout: post
 title: Chain-of-Thought 与 Thinking 模式 — 让模型先想再答
 date: 2026-05-13
-category: "Prompt 与推理"
+topic: "Prompt 与推理"
 tags: [AI, CoT, Reasoning, Prompt Engineering]
 excerpt: 从最朴素的"Let's think step by step"，到 Claude Extended Thinking 和 o-series，推理模型的实战用法。
 permalink: /posts/2026-05-13-chain-of-thought.html

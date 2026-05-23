@@ -2,7 +2,7 @@
 layout: post
 title: AI Agent 七大设计模式 — ReAct / Plan-Execute / Reflection / Tool Use / Multi-Agent
 date: 2026-05-21
-category: "Agent 与工具"
+topic: "Agent 与工具"
 tags: [AI, Agent, 架构, 设计模式]
 excerpt: 2026 年最常见的 7 种 Agent 设计模式，分别适合什么场景、坑在哪、什么时候不要用。
 permalink: /posts/2026-05-21-ai-agent-design-patterns.html

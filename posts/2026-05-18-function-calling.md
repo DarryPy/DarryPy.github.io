@@ -2,7 +2,7 @@
 layout: post
 title: Function Calling / Tool Use 实战 — 让 LLM 真的"动手"做事
 date: 2026-05-18
-category: "Agent 与工具"
+topic: "Agent 与工具"
 tags: [AI, Tool Use, Function Calling, Agent]
 excerpt: 工具调用是 agent 的灵魂。schema 怎么设计、错误怎么传回、并行调用怎么协调，一份避坑指南。
 permalink: /posts/2026-05-18-function-calling.html

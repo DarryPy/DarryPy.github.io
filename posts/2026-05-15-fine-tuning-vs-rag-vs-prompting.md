@@ -2,7 +2,7 @@
 layout: post
 title: Fine-tuning vs Prompting vs RAG — 什么时候用哪个
 date: 2026-05-15
-category: "工程实战"
+topic: "工程实战"
 tags: [AI, Fine-tuning, RAG, Prompt Engineering]
 excerpt: 90% 的"应该 fine-tune 一下"其实是 prompt 没写好。一份决策矩阵帮你选对路。
 permalink: /posts/2026-05-15-fine-tuning-vs-rag-vs-prompting.html

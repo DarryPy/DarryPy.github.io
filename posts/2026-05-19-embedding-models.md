@@ -2,7 +2,7 @@
 layout: post
 title: Embedding 模型选型实战 — OpenAI / Voyage / BGE / Cohere 怎么挑
 date: 2026-05-19
-category: "RAG 与检索"
+topic: "RAG 与检索"
 tags: [AI, Embedding, RAG, 向量检索]
 excerpt: 主流 embedding 模型横向对比，维度、性能、价格、领域适配度，一份选型决策表。
 permalink: /posts/2026-05-19-embedding-models.html

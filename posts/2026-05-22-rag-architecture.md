@@ -2,7 +2,7 @@
 layout: post
 title: RAG 架构详解 — 从基础检索到 Agentic / 多模态
 date: 2026-05-22
-category: "RAG 与检索"
+topic: "RAG 与检索"
 tags: [AI, RAG, 向量检索, 架构]
 excerpt: 2026 年的 RAG 已经不只是"检索 + 生成"那么简单。混合检索、Agentic RAG、多模态 RAG，工程落地的真实选型路径。
 permalink: /posts/2026-05-22-rag-architecture.html

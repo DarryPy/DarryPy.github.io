@@ -2,7 +2,7 @@
 layout: post
 title: AI 评估工具横评 — LangSmith / Phoenix / Ragas / Braintrust
 date: 2026-04-23
-category: "评估与安全"
+topic: "评估与安全"
 tags: [AI, Eval, LangSmith, Phoenix, Ragas]
 excerpt: 不再自己 print 调试。主流 LLM 评估和 observability 工具横向对比，按场景选型。
 permalink: /posts/2026-04-23-ai-eval-tools.html
