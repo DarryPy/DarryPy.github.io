@@ -240,84 +240,34 @@ section{padding:64px 0;position:relative}
   .topics-side{display:none}
 }
 
-/* ===== Posts toolbar (expand/collapse all) ===== */
-.posts-toolbar{
-  display:flex;justify-content:flex-end;align-items:center;gap:12px;
-  margin-bottom:24px;
+/* ===== 当前筛选标识（仅筛选时显示）===== */
+.filter-banner{
+  display:none;align-items:center;justify-content:space-between;gap:10px;
+  margin-bottom:18px;
+  padding:10px 16px;
+  background:rgba(56,189,248,.08);
+  border:1px solid rgba(56,189,248,.25);
+  border-radius:10px;
+  font-size:13px;
 }
-.btn-toggle-all{
+.filter-banner.visible{display:flex}
+.filter-banner-text{color:var(--t1)}
+.filter-banner-text strong{color:var(--blue);font-weight:700}
+.filter-banner-clear{
   font:inherit;
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:12.5px;font-weight:600;
+  font-size:12px;font-weight:600;
   color:var(--t2);
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:7px 14px;
+  background:transparent;
+  border:1px solid var(--border-strong);
+  border-radius:6px;
+  padding:4px 10px;
   cursor:pointer;
   transition:color .2s,border-color .2s,background .15s;
 }
-.btn-toggle-all:hover{
-  color:var(--t1);
-  border-color:var(--border-strong);
-  background:var(--surface-2);
-}
-.btn-toggle-all::before{
-  content:'⇅';font-size:13px;color:var(--blue);
-}
+.filter-banner-clear:hover{color:var(--t1);border-color:var(--t2);background:rgba(255,255,255,.04)}
 
-/* ===== Posts list (collapsible) ===== */
-.category{margin-bottom:32px;scroll-margin-top:90px}
-.category-header{
-  display:flex;align-items:center;gap:12px;
-  margin-bottom:16px;
-  padding:0 0 10px 0;
-  border:0;
-  border-bottom:1px solid var(--border);
-  background:transparent;
-  width:100%;
-  cursor:pointer;
-  font:inherit;
-  color:inherit;
-  text-align:left;
-  transition:border-color .2s;
-}
-.category-header:hover{border-bottom-color:var(--border-strong)}
-.category-header:hover .category-chevron{color:var(--t1)}
-.category-chevron{
-  margin-left:auto;
-  font-size:14px;
-  color:var(--t3);
-  transition:transform .25s ease,color .2s;
-  line-height:1;
-}
-.category.collapsed .category-chevron{transform:rotate(-90deg)}
-.posts-list-wrap{
-  display:grid;
-  grid-template-rows:1fr;
-  transition:grid-template-rows .35s ease,opacity .2s,margin-top .2s;
-  opacity:1;
-}
-.category.collapsed .posts-list-wrap{
-  grid-template-rows:0fr;
-  opacity:0;
-  margin-top:-8px;
-}
-.posts-list-wrap > .posts-list{overflow:hidden}
-.category:last-child{margin-bottom:0}
-.category-title{
-  font-size:17px;font-weight:800;letter-spacing:-.2px;
-  color:var(--t1);
-  display:flex;align-items:center;gap:10px;
-}
-.category-title::before{
-  content:'';width:4px;height:18px;
-  background:var(--grad);border-radius:2px;
-}
-.category-count{
-  font-size:12px;color:var(--t3);font-weight:600;
-  letter-spacing:1px;
-}
+/* 隐藏被筛选掉的文章 */
+.post-row[hidden]{display:none!important}
 .posts-list{display:flex;flex-direction:column;gap:8px}
 .post-row{
   display:grid;
@@ -513,10 +463,14 @@ footer a:hover{color:var(--blue)}
       <aside class="topics-side" aria-label="文章分组">
         <div class="ts-title">文章分组</div>
         <nav class="ts-list">
+          <a class="ts-link active" data-topic="all" href="#all">
+            <span>全部</span>
+            <span class="ts-count">{{ blog_posts.size }}</span>
+          </a>
           {%- for t in topics -%}
             {%- assign tp = blog_posts | where: "topic", t -%}
             {%- if tp.size > 0 -%}
-            <a class="ts-link" href="#topic-{{ forloop.index }}">
+            <a class="ts-link" data-topic="{{ t }}" href="#topic-{{ forloop.index }}">
               <span>{{ t }}</span>
               <span class="ts-count">{{ tp.size }}</span>
             </a>
@@ -530,38 +484,26 @@ footer a:hover{color:var(--blue)}
         <h2 class="sec-title">最新文章</h2>
         <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
 
+        <div class="filter-banner" id="filterBanner">
+          <span class="filter-banner-text">当前筛选：<strong id="filterBannerName"></strong></span>
+          <button class="filter-banner-clear" type="button" id="filterBannerClear">显示全部 ×</button>
+        </div>
+
         {%- if blog_posts.size == 0 -%}
           <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
         {%- else -%}
-          <div class="posts-toolbar">
-            <button class="btn-toggle-all" type="button" data-action="collapse">全部收起</button>
-          </div>
-          {%- for t in topics -%}
-            {%- assign topic_posts = blog_posts | where: "topic", t -%}
-            {%- if topic_posts.size > 0 -%}
-            <div class="category" id="topic-{{ forloop.index }}">
-              <button class="category-header" type="button" aria-expanded="true" aria-controls="topic-{{ forloop.index }}-list">
-                <span class="category-title">{{ t }}</span>
-                <span class="category-count">{{ topic_posts.size }} 篇</span>
-                <span class="category-chevron" aria-hidden="true">▾</span>
-              </button>
-              <div class="posts-list-wrap" id="topic-{{ forloop.index }}-list">
-                <div class="posts-list">
-                  {%- for post in topic_posts -%}
-                  <a class="post-row" href="{{ post.url | relative_url }}">
-                    <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
-                    <div class="post-body">
-                      <div class="post-title">{{ post.title }}</div>
-                      <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
-                    </div>
-                    <div class="post-arrow">→</div>
-                  </a>
-                  {%- endfor -%}
-                </div>
+          <div class="posts-list">
+            {%- for post in blog_posts -%}
+            <a class="post-row" data-topic="{{ post.topic | default: '' }}" href="{{ post.url | relative_url }}">
+              <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+              <div class="post-body">
+                <div class="post-title">{{ post.title }}</div>
+                <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
               </div>
-            </div>
-            {%- endif -%}
-          {%- endfor -%}
+              <div class="post-arrow">→</div>
+            </a>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
       </div>
     </div>
@@ -597,104 +539,62 @@ footer a:hover{color:var(--blue)}
     document.querySelectorAll('section .post-row, .sec-tag, .sec-title, .sec-desc')
       .forEach(el => { el.style.opacity = 0; io.observe(el); });
 
-    // 分组折叠展开 + 状态记忆
-    (function(){
-      const STATE_KEY = 'darrypy-cat-collapse';
-      const getState = () => { try { return JSON.parse(localStorage.getItem(STATE_KEY) || '{}'); } catch { return {}; } };
-      const setState = (s) => { try { localStorage.setItem(STATE_KEY, JSON.stringify(s)); } catch {} };
-
-      const cats = document.querySelectorAll('.category');
-      const toggleBtn = document.querySelector('.btn-toggle-all');
-
-      // 还原状态
-      const state = getState();
-      cats.forEach(c => {
-        const header = c.querySelector('.category-header');
-        if (state[c.id]) {
-          c.classList.add('collapsed');
-          header?.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      // 单分组点击切换
-      cats.forEach(c => {
-        const header = c.querySelector('.category-header');
-        header?.addEventListener('click', () => {
-          c.classList.toggle('collapsed');
-          const collapsed = c.classList.contains('collapsed');
-          header.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-          const s = getState();
-          s[c.id] = collapsed;
-          setState(s);
-          syncToggleBtn();
-        });
-      });
-
-      function syncToggleBtn(){
-        if (!toggleBtn) return;
-        const allCollapsed = [...cats].every(c => c.classList.contains('collapsed'));
-        if (allCollapsed) {
-          toggleBtn.dataset.action = 'expand';
-          toggleBtn.textContent = '全部展开';
-        } else {
-          toggleBtn.dataset.action = 'collapse';
-          toggleBtn.textContent = '全部收起';
-        }
-      }
-      syncToggleBtn();
-
-      // 全部展开 / 全部收起
-      toggleBtn?.addEventListener('click', () => {
-        const collapse = toggleBtn.dataset.action === 'collapse';
-        const s = {};
-        cats.forEach(c => {
-          c.classList.toggle('collapsed', collapse);
-          c.querySelector('.category-header')?.setAttribute('aria-expanded', collapse ? 'false' : 'true');
-          s[c.id] = collapse;
-        });
-        setState(s);
-        syncToggleBtn();
-      });
-
-      // 点击侧栏链接 / URL hash → 自动展开目标分组
-      const expandTarget = (hash) => {
-        if (!hash || !hash.startsWith('#topic-')) return;
-        const cat = document.getElementById(hash.slice(1));
-        if (cat?.classList.contains('collapsed')) {
-          cat.classList.remove('collapsed');
-          cat.querySelector('.category-header')?.setAttribute('aria-expanded', 'true');
-          const s = getState();
-          delete s[cat.id];
-          setState(s);
-          syncToggleBtn();
-        }
-      };
-      document.querySelectorAll('.ts-link').forEach(link => {
-        link.addEventListener('click', () => expandTarget(link.getAttribute('href')));
-      });
-      window.addEventListener('hashchange', () => expandTarget(location.hash));
-      if (location.hash) expandTarget(location.hash);
-    })();
-
-    // 左侧分组导航 scroll-spy
+    // 文章分组筛选（默认全部按时间倒序；点侧栏筛选）
     (function(){
       const links = document.querySelectorAll('.topics-side .ts-link');
+      const rows = document.querySelectorAll('.posts-main .post-row');
+      const banner = document.getElementById('filterBanner');
+      const bannerName = document.getElementById('filterBannerName');
+      const bannerClear = document.getElementById('filterBannerClear');
       if (!links.length) return;
-      const linkMap = new Map();
-      links.forEach(a => {
-        const id = a.getAttribute('href').slice(1);
-        linkMap.set(id, a);
-      });
-      const targets = [...linkMap.keys()].map(id => document.getElementById(id)).filter(Boolean);
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          const a = linkMap.get(e.target.id);
-          if (!a) return;
-          if (e.isIntersecting) a.classList.add('active');
-          else a.classList.remove('active');
+
+      function applyFilter(topic){
+        // 更新侧栏选中态
+        links.forEach(l => l.classList.toggle('active', l.dataset.topic === topic));
+        // 筛选文章
+        if (!topic || topic === 'all') {
+          rows.forEach(r => r.removeAttribute('hidden'));
+          banner?.classList.remove('visible');
+        } else {
+          rows.forEach(r => {
+            if (r.dataset.topic === topic) r.removeAttribute('hidden');
+            else r.setAttribute('hidden', '');
+          });
+          if (banner && bannerName) {
+            bannerName.textContent = topic;
+            banner.classList.add('visible');
+          }
+        }
+        // 同步 URL hash（方便分享）
+        if (topic && topic !== 'all') {
+          history.replaceState(null, '', '#filter=' + encodeURIComponent(topic));
+        } else {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      }
+
+      // 点击侧栏链接 = 筛选，不跳锚点
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          applyFilter(link.dataset.topic);
+          // 滚到文章区
+          document.getElementById('posts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
-      }, { rootMargin: '-15% 0px -70% 0px' });
-      targets.forEach(t => io.observe(t));
+      });
+      // 清除筛选
+      bannerClear?.addEventListener('click', () => applyFilter('all'));
+
+      // 初始：如果 URL 带 #filter=xxx，应用该筛选；否则默认显示全部
+      const hash = decodeURIComponent(location.hash || '');
+      const m = hash.match(/^#filter=(.+)$/);
+      if (m) {
+        const target = m[1];
+        const has = [...links].some(l => l.dataset.topic === target);
+        applyFilter(has ? target : 'all');
+      } else {
+        applyFilter('all');
+      }
     })();
 
     // 鼠标跟随光圈（仅 hover-capable 设备）
