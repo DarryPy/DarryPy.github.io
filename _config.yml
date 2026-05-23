@@ -1,5 +1,11 @@
 title: DarryPy
 description: DarryPy 的个人博客 — 后端 / 系统 / AI 工具
+url: "https://darrypy.github.io"
+author: DarryPy
+lang: zh-CN
+twitter_username: DarryPy
+github_username: DarryPy
+
 include: [".well-known"]
 markdown: kramdown
 kramdown:
@@ -8,14 +14,22 @@ kramdown:
   syntax_highlighter_opts:
     css_class: 'highlight'
 permalink: /:title.html
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+
 defaults:
   - scope:
       path: "posts"
     values:
       layout: post
+
 exclude:
   - README.md
   - .gitattributes
+  - apple-app-site-association
 
 # giscus 评论：填入下面 4 个字段即可启用。
 # 启用步骤：

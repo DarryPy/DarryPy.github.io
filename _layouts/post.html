@@ -6,8 +6,10 @@
 <meta name="theme-color" content="#06080f" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="format-detection" content="telephone=no" />
+<link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}">
+{% seo title=false %}
 <title>{{ page.title }} · DarryPy</title>
-<meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+{% feed_meta %}
 <style>
 :root{
   --bg-1:#06080f;
@@ -354,6 +356,10 @@ footer{
       <h1 class="post-h1">{{ page.title }}</h1>
       <div class="post-meta">
         <span>{{ page.date | date: "%Y-%m-%d" }}</span>
+        {%- assign words = content | strip_html | number_of_words -%}
+        {%- assign minutes = words | divided_by: 300 -%}
+        {%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
+        <span class="dot"></span><span>约 {{ minutes }} 分钟 · {{ words }} 字</span>
         {% if page.tags %}<span class="dot"></span><span>{{ page.tags | join: " · " }}</span>{% endif %}
       </div>
     </header>
