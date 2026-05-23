@@ -240,15 +240,71 @@ section{padding:64px 0;position:relative}
   .topics-side{display:none}
 }
 
-/* ===== Posts list (grouped) ===== */
-.category{margin-bottom:48px;scroll-margin-top:90px}
-.category:last-child{margin-bottom:0}
-.category-header{
-  display:flex;align-items:baseline;gap:12px;
-  margin-bottom:16px;
-  padding-bottom:10px;
-  border-bottom:1px solid var(--border);
+/* ===== Posts toolbar (expand/collapse all) ===== */
+.posts-toolbar{
+  display:flex;justify-content:flex-end;align-items:center;gap:12px;
+  margin-bottom:24px;
 }
+.btn-toggle-all{
+  font:inherit;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:600;
+  color:var(--t2);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:7px 14px;
+  cursor:pointer;
+  transition:color .2s,border-color .2s,background .15s;
+}
+.btn-toggle-all:hover{
+  color:var(--t1);
+  border-color:var(--border-strong);
+  background:var(--surface-2);
+}
+.btn-toggle-all::before{
+  content:'⇅';font-size:13px;color:var(--blue);
+}
+
+/* ===== Posts list (collapsible) ===== */
+.category{margin-bottom:32px;scroll-margin-top:90px}
+.category-header{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:16px;
+  padding:0 0 10px 0;
+  border:0;
+  border-bottom:1px solid var(--border);
+  background:transparent;
+  width:100%;
+  cursor:pointer;
+  font:inherit;
+  color:inherit;
+  text-align:left;
+  transition:border-color .2s;
+}
+.category-header:hover{border-bottom-color:var(--border-strong)}
+.category-header:hover .category-chevron{color:var(--t1)}
+.category-chevron{
+  margin-left:auto;
+  font-size:14px;
+  color:var(--t3);
+  transition:transform .25s ease,color .2s;
+  line-height:1;
+}
+.category.collapsed .category-chevron{transform:rotate(-90deg)}
+.posts-list-wrap{
+  display:grid;
+  grid-template-rows:1fr;
+  transition:grid-template-rows .35s ease,opacity .2s,margin-top .2s;
+  opacity:1;
+}
+.category.collapsed .posts-list-wrap{
+  grid-template-rows:0fr;
+  opacity:0;
+  margin-top:-8px;
+}
+.posts-list-wrap > .posts-list{overflow:hidden}
+.category:last-child{margin-bottom:0}
 .category-title{
   font-size:17px;font-weight:800;letter-spacing:-.2px;
   color:var(--t1);
@@ -477,25 +533,31 @@ footer a:hover{color:var(--blue)}
         {%- if blog_posts.size == 0 -%}
           <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
         {%- else -%}
+          <div class="posts-toolbar">
+            <button class="btn-toggle-all" type="button" data-action="collapse">全部收起</button>
+          </div>
           {%- for t in topics -%}
             {%- assign topic_posts = blog_posts | where: "topic", t -%}
             {%- if topic_posts.size > 0 -%}
             <div class="category" id="topic-{{ forloop.index }}">
-              <div class="category-header">
+              <button class="category-header" type="button" aria-expanded="true" aria-controls="topic-{{ forloop.index }}-list">
                 <span class="category-title">{{ t }}</span>
                 <span class="category-count">{{ topic_posts.size }} 篇</span>
-              </div>
-              <div class="posts-list">
-                {%- for post in topic_posts -%}
-                <a class="post-row" href="{{ post.url | relative_url }}">
-                  <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
-                  <div class="post-body">
-                    <div class="post-title">{{ post.title }}</div>
-                    <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
-                  </div>
-                  <div class="post-arrow">→</div>
-                </a>
-                {%- endfor -%}
+                <span class="category-chevron" aria-hidden="true">▾</span>
+              </button>
+              <div class="posts-list-wrap" id="topic-{{ forloop.index }}-list">
+                <div class="posts-list">
+                  {%- for post in topic_posts -%}
+                  <a class="post-row" href="{{ post.url | relative_url }}">
+                    <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+                    <div class="post-body">
+                      <div class="post-title">{{ post.title }}</div>
+                      <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+                    </div>
+                    <div class="post-arrow">→</div>
+                  </a>
+                  {%- endfor -%}
+                </div>
               </div>
             </div>
             {%- endif -%}
@@ -534,6 +596,85 @@ footer a:hover{color:var(--blue)}
     }, { threshold: 0.12 });
     document.querySelectorAll('section .post-row, .sec-tag, .sec-title, .sec-desc')
       .forEach(el => { el.style.opacity = 0; io.observe(el); });
+
+    // 分组折叠展开 + 状态记忆
+    (function(){
+      const STATE_KEY = 'darrypy-cat-collapse';
+      const getState = () => { try { return JSON.parse(localStorage.getItem(STATE_KEY) || '{}'); } catch { return {}; } };
+      const setState = (s) => { try { localStorage.setItem(STATE_KEY, JSON.stringify(s)); } catch {} };
+
+      const cats = document.querySelectorAll('.category');
+      const toggleBtn = document.querySelector('.btn-toggle-all');
+
+      // 还原状态
+      const state = getState();
+      cats.forEach(c => {
+        const header = c.querySelector('.category-header');
+        if (state[c.id]) {
+          c.classList.add('collapsed');
+          header?.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // 单分组点击切换
+      cats.forEach(c => {
+        const header = c.querySelector('.category-header');
+        header?.addEventListener('click', () => {
+          c.classList.toggle('collapsed');
+          const collapsed = c.classList.contains('collapsed');
+          header.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          const s = getState();
+          s[c.id] = collapsed;
+          setState(s);
+          syncToggleBtn();
+        });
+      });
+
+      function syncToggleBtn(){
+        if (!toggleBtn) return;
+        const allCollapsed = [...cats].every(c => c.classList.contains('collapsed'));
+        if (allCollapsed) {
+          toggleBtn.dataset.action = 'expand';
+          toggleBtn.textContent = '全部展开';
+        } else {
+          toggleBtn.dataset.action = 'collapse';
+          toggleBtn.textContent = '全部收起';
+        }
+      }
+      syncToggleBtn();
+
+      // 全部展开 / 全部收起
+      toggleBtn?.addEventListener('click', () => {
+        const collapse = toggleBtn.dataset.action === 'collapse';
+        const s = {};
+        cats.forEach(c => {
+          c.classList.toggle('collapsed', collapse);
+          c.querySelector('.category-header')?.setAttribute('aria-expanded', collapse ? 'false' : 'true');
+          s[c.id] = collapse;
+        });
+        setState(s);
+        syncToggleBtn();
+      });
+
+      // 点击侧栏链接 / URL hash → 自动展开目标分组
+      const expandTarget = (hash) => {
+        if (!hash || !hash.startsWith('#topic-')) return;
+        const cat = document.getElementById(hash.slice(1));
+        if (cat?.classList.contains('collapsed')) {
+          cat.classList.remove('collapsed');
+          cat.querySelector('.category-header')?.setAttribute('aria-expanded', 'true');
+          const s = getState();
+          delete s[cat.id];
+          setState(s);
+          syncToggleBtn();
+        }
+      };
+      document.querySelectorAll('.ts-link').forEach(link => {
+        link.addEventListener('click', () => expandTarget(link.getAttribute('href')));
+      });
+      window.addEventListener('hashchange', () => expandTarget(location.hash));
+      if (location.hash) expandTarget(location.hash);
+    })();
 
     // 左侧分组导航 scroll-spy
     (function(){
