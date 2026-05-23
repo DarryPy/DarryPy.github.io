@@ -178,95 +178,118 @@ section{padding:64px 0;position:relative}
 .btn-ghost{background:rgba(255,255,255,.04);color:var(--t1);border-color:var(--border-strong)}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
 
-/* ===== 首页左侧分组导航 (≥1200px 显示) ===== */
+/* ===== 文章区双栏布局 + 左侧分组导航 ===== */
+.posts-wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.posts-layout{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:48px;
+  align-items:start;
+}
 .topics-side{
-  position:fixed;
-  top:110px;
-  left:max(24px,calc((100vw - 1280px) / 2));
-  width:200px;
-  max-height:calc(100vh - 160px);
+  position:sticky;
+  top:88px;
+  align-self:start;
+  max-height:calc(100vh - 110px);
   overflow-y:auto;
-  padding:18px 0;
-  z-index:10;
+  padding:20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  backdrop-filter:blur(12px);
 }
 .topics-side::-webkit-scrollbar{width:4px}
 .topics-side::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .topics-side .ts-title{
-  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--t3);margin-bottom:14px;font-weight:700;
-  padding-left:12px;
+  font-size:12px;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:16px;font-weight:800;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
 }
-.topics-side .ts-list{display:flex;flex-direction:column;gap:4px}
+.topics-side .ts-list{display:flex;flex-direction:column;gap:6px}
 .topics-side .ts-link{
   display:flex;align-items:center;justify-content:space-between;
-  gap:8px;
-  font-size:13px;color:var(--t2);
+  gap:10px;
+  font-size:14px;color:var(--t1);font-weight:500;
   text-decoration:none;
-  border-left:2px solid transparent;
-  padding:6px 12px;
-  transition:color .2s,border-color .2s,background .15s;
+  border-left:3px solid transparent;
+  padding:10px 14px;
+  border-radius:0 8px 8px 0;
+  transition:color .2s,border-color .2s,background .15s,padding-left .15s;
 }
-.topics-side .ts-link:hover{color:var(--t1);background:rgba(255,255,255,.03)}
+.topics-side .ts-link:hover{
+  color:var(--t1);
+  background:rgba(255,255,255,.05);
+  padding-left:18px;
+}
 .topics-side .ts-link.active{
   color:var(--blue);
   border-left-color:var(--blue);
-  background:rgba(56,189,248,.05);
+  background:rgba(56,189,248,.1);
+  font-weight:700;
 }
 .topics-side .ts-count{
-  font-size:11px;color:var(--t3);font-weight:600;font-variant-numeric:tabular-nums;
+  font-size:11.5px;color:var(--t3);font-weight:600;font-variant-numeric:tabular-nums;
+  padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.04);
 }
-@media (max-width:1199px){.topics-side{display:none}}
+.topics-side .ts-link.active .ts-count{
+  color:var(--blue);background:rgba(56,189,248,.15);
+}
+@media (max-width:1100px){
+  .posts-layout{grid-template-columns:1fr}
+  .topics-side{display:none}
+}
 
-/* ===== Posts list (grouped + compact) ===== */
-.category{margin-bottom:36px;scroll-margin-top:90px}
+/* ===== Posts list (grouped) ===== */
+.category{margin-bottom:48px;scroll-margin-top:90px}
 .category:last-child{margin-bottom:0}
 .category-header{
-  display:flex;align-items:baseline;gap:10px;
-  margin-bottom:12px;
-  padding-bottom:8px;
+  display:flex;align-items:baseline;gap:12px;
+  margin-bottom:16px;
+  padding-bottom:10px;
   border-bottom:1px solid var(--border);
 }
 .category-title{
-  font-size:14px;font-weight:800;letter-spacing:.3px;
+  font-size:17px;font-weight:800;letter-spacing:-.2px;
   color:var(--t1);
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:10px;
 }
 .category-title::before{
-  content:'';width:3px;height:14px;
+  content:'';width:4px;height:18px;
   background:var(--grad);border-radius:2px;
 }
 .category-count{
-  font-size:11px;color:var(--t3);font-weight:600;
+  font-size:12px;color:var(--t3);font-weight:600;
   letter-spacing:1px;
 }
-.posts-list{display:flex;flex-direction:column;gap:4px}
+.posts-list{display:flex;flex-direction:column;gap:8px}
 .post-row{
   display:grid;
-  grid-template-columns:90px 1fr 20px;
+  grid-template-columns:100px 1fr 24px;
   align-items:center;
-  gap:14px;
-  padding:10px 14px;
-  border-radius:8px;
+  gap:18px;
+  padding:14px 18px;
+  border-radius:10px;
   text-decoration:none;
   color:inherit;
-  transition:background .15s,transform .15s;
+  transition:background .15s,transform .15s,border-color .2s;
   border:1px solid transparent;
 }
 .post-row:hover{
   background:var(--surface);
   border-color:var(--border);
-  transform:translateX(3px);
+  transform:translateX(4px);
 }
-.post-row:hover .post-arrow{color:var(--blue);transform:translateX(3px)}
+.post-row:hover .post-arrow{color:var(--blue);transform:translateX(4px)}
 .post-date{
-  font-size:11.5px;letter-spacing:1.2px;color:var(--blue);font-weight:600;
+  font-size:12px;letter-spacing:1.2px;color:var(--blue);font-weight:600;
   font-variant-numeric:tabular-nums;
 }
 .post-body{min-width:0}
-.post-title{font-size:14.5px;font-weight:600;color:var(--t1);line-height:1.45;margin-bottom:2px}
-.post-excerpt{font-size:12.5px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5}
+.post-title{font-size:15px;font-weight:600;color:var(--t1);line-height:1.45;margin-bottom:3px}
+.post-excerpt{font-size:13px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.55}
 .post-arrow{
-  font-size:15px;color:var(--t3);
+  font-size:16px;color:var(--t3);
   transition:color .2s,transform .2s;
   text-align:right;
 }
@@ -390,23 +413,6 @@ footer a:hover{color:var(--blue)}
     <div class="orb orb-3"></div>
   </div>
 
-  {%- assign side_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" -%}
-  {%- assign side_topics = "Prompt 与推理,RAG 与检索,Agent 与工具,评估与安全,模型与训练,工程实战" | split: "," -%}
-  <aside class="topics-side" aria-label="文章分组">
-    <div class="ts-title">文章分组</div>
-    <nav class="ts-list">
-      {%- for t in side_topics -%}
-        {%- assign tp = side_posts | where: "topic", t -%}
-        {%- if tp.size > 0 -%}
-        <a class="ts-link" href="#topic-{{ forloop.index }}">
-          <span>{{ t }}</span>
-          <span class="ts-count">{{ tp.size }}</span>
-        </a>
-        {%- endif -%}
-      {%- endfor -%}
-    </nav>
-  </aside>
-
   <nav class="nav">
     <div class="brand">
       <span class="brand-dot"></span>
@@ -443,41 +449,60 @@ footer a:hover{color:var(--blue)}
     </p>
   </section>
 
-  <section id="posts" class="wrap">
-    <div class="sec-tag">Posts</div>
-    <h2 class="sec-title">最新文章</h2>
-    <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
-
+  <section id="posts" class="posts-wrap">
     {%- assign blog_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
     {%- assign topics = "Prompt 与推理,RAG 与检索,Agent 与工具,评估与安全,模型与训练,工程实战" | split: "," -%}
 
-    {%- if blog_posts.size == 0 -%}
-      <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
-    {%- else -%}
-      {%- for t in topics -%}
-        {%- assign topic_posts = blog_posts | where: "topic", t -%}
-        {%- if topic_posts.size > 0 -%}
-        <div class="category" id="topic-{{ forloop.index }}">
-          <div class="category-header">
-            <span class="category-title">{{ t }}</span>
-            <span class="category-count">{{ topic_posts.size }} 篇</span>
-          </div>
-          <div class="posts-list">
-            {%- for post in topic_posts -%}
-            <a class="post-row" href="{{ post.url | relative_url }}">
-              <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
-              <div class="post-body">
-                <div class="post-title">{{ post.title }}</div>
-                <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
-              </div>
-              <div class="post-arrow">→</div>
+    <div class="posts-layout">
+      <aside class="topics-side" aria-label="文章分组">
+        <div class="ts-title">文章分组</div>
+        <nav class="ts-list">
+          {%- for t in topics -%}
+            {%- assign tp = blog_posts | where: "topic", t -%}
+            {%- if tp.size > 0 -%}
+            <a class="ts-link" href="#topic-{{ forloop.index }}">
+              <span>{{ t }}</span>
+              <span class="ts-count">{{ tp.size }}</span>
             </a>
-            {%- endfor -%}
-          </div>
-        </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      </aside>
+
+      <div class="posts-main">
+        <div class="sec-tag">Posts</div>
+        <h2 class="sec-title">最新文章</h2>
+        <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
+
+        {%- if blog_posts.size == 0 -%}
+          <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
+        {%- else -%}
+          {%- for t in topics -%}
+            {%- assign topic_posts = blog_posts | where: "topic", t -%}
+            {%- if topic_posts.size > 0 -%}
+            <div class="category" id="topic-{{ forloop.index }}">
+              <div class="category-header">
+                <span class="category-title">{{ t }}</span>
+                <span class="category-count">{{ topic_posts.size }} 篇</span>
+              </div>
+              <div class="posts-list">
+                {%- for post in topic_posts -%}
+                <a class="post-row" href="{{ post.url | relative_url }}">
+                  <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+                  <div class="post-body">
+                    <div class="post-title">{{ post.title }}</div>
+                    <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+                  </div>
+                  <div class="post-arrow">→</div>
+                </a>
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- endif -%}
+          {%- endfor -%}
         {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+      </div>
+    </div>
   </section>
 
   <section id="contact" class="wrap" style="text-align:center;padding-bottom:120px">
