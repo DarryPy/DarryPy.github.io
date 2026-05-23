@@ -104,31 +104,31 @@ img{max-width:100%;height:auto;display:block}
 
 /* ===== 通用容器 ===== */
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
-section{padding:96px 0;position:relative}
+section{padding:64px 0;position:relative}
 .sec-tag{
   display:inline-block;
-  font-size:11px;
+  font-size:10.5px;
   font-weight:700;
   letter-spacing:3px;
   text-transform:uppercase;
   color:var(--blue);
-  padding:6px 14px;
+  padding:5px 12px;
   background:rgba(56,189,248,.1);
   border:1px solid rgba(56,189,248,.3);
   border-radius:999px;
-  margin-bottom:18px;
+  margin-bottom:14px;
 }
 .sec-title{
-  font-size:38px;
+  font-size:30px;
   font-weight:800;
   letter-spacing:-.5px;
-  margin-bottom:14px;
+  margin-bottom:10px;
   line-height:1.2;
 }
-.sec-desc{color:var(--t2);font-size:15px;max-width:640px;margin-bottom:48px}
+.sec-desc{color:var(--t2);font-size:14px;max-width:640px;margin-bottom:32px}
 
 /* ===== Hero ===== */
-.hero{padding:120px 0 80px;text-align:left}
+.hero{padding:88px 0 56px;text-align:left}
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:8px;
   font-size:12px;font-weight:600;letter-spacing:1.5px;
@@ -178,38 +178,57 @@ section{padding:96px 0;position:relative}
 .btn-ghost{background:rgba(255,255,255,.04);color:var(--t1);border-color:var(--border-strong)}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
 
-/* ===== Posts list ===== */
-.posts-list{display:flex;flex-direction:column;gap:12px}
+/* ===== Posts list (grouped + compact) ===== */
+.category{margin-bottom:36px}
+.category:last-child{margin-bottom:0}
+.category-header{
+  display:flex;align-items:baseline;gap:10px;
+  margin-bottom:12px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.category-title{
+  font-size:14px;font-weight:800;letter-spacing:.3px;
+  color:var(--t1);
+  display:flex;align-items:center;gap:8px;
+}
+.category-title::before{
+  content:'';width:3px;height:14px;
+  background:var(--grad);border-radius:2px;
+}
+.category-count{
+  font-size:11px;color:var(--t3);font-weight:600;
+  letter-spacing:1px;
+}
+.posts-list{display:flex;flex-direction:column;gap:4px}
 .post-row{
   display:grid;
-  grid-template-columns:120px 1fr 30px;
+  grid-template-columns:90px 1fr 20px;
   align-items:center;
-  gap:18px;
-  padding:18px 22px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px;
+  gap:14px;
+  padding:10px 14px;
+  border-radius:8px;
   text-decoration:none;
   color:inherit;
-  transition:transform .15s,border-color .2s,background .2s;
-  backdrop-filter:blur(12px);
+  transition:background .15s,transform .15s;
+  border:1px solid transparent;
 }
 .post-row:hover{
-  transform:translateX(4px);
-  border-color:var(--border-strong);
-  background:var(--surface-2);
+  background:var(--surface);
+  border-color:var(--border);
+  transform:translateX(3px);
 }
-.post-row:hover .post-arrow{transform:translateX(4px);color:var(--blue)}
+.post-row:hover .post-arrow{color:var(--blue);transform:translateX(3px)}
 .post-date{
-  font-size:12px;letter-spacing:1.5px;color:var(--blue);font-weight:700;
+  font-size:11.5px;letter-spacing:1.2px;color:var(--blue);font-weight:600;
   font-variant-numeric:tabular-nums;
 }
 .post-body{min-width:0}
-.post-title{font-size:16px;font-weight:700;margin-bottom:3px;color:var(--t1)}
-.post-excerpt{font-size:13.5px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.post-title{font-size:14.5px;font-weight:600;color:var(--t1);line-height:1.45;margin-bottom:2px}
+.post-excerpt{font-size:12.5px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5}
 .post-arrow{
-  font-size:20px;color:var(--t3);
-  transition:transform .2s,color .2s;
+  font-size:15px;color:var(--t3);
+  transition:color .2s,transform .2s;
   text-align:right;
 }
 
@@ -278,19 +297,23 @@ footer a:hover{color:var(--blue)}
   .sec-tag{font-size:10.5px;letter-spacing:2.2px;padding:5px 12px;margin-bottom:14px}
   .sec-title{font-size:26px;margin-bottom:10px}
   .sec-desc{font-size:14px;margin-bottom:34px}
+  .category{margin-bottom:26px}
+  .category-title{font-size:13px}
   .post-row{
-    grid-template-columns:1fr 24px;
+    grid-template-columns:1fr 18px;
     grid-template-rows:auto auto;
     grid-template-areas:'date arrow' 'body body';
-    gap:10px 12px;
-    padding:16px 18px;
-    border-radius:12px;
+    gap:4px 10px;
+    padding:10px 12px;
+    border-radius:8px;
   }
-  .post-row .post-date{grid-area:date;font-size:11.5px}
+  .post-row .post-date{grid-area:date;font-size:11px}
   .post-row .post-body{grid-area:body}
-  .post-row .post-arrow{grid-area:arrow;font-size:18px}
-  .post-title{font-size:15.5px}
-  .post-excerpt{white-space:normal;font-size:13px;line-height:1.6}
+  .post-row .post-arrow{grid-area:arrow;font-size:14px}
+  .post-title{font-size:14px;line-height:1.4}
+  .post-excerpt{white-space:normal;font-size:12px;line-height:1.5;color:var(--t3);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  }
   #contact{padding-bottom:80px}
   /* 移动端不要靠 blur orbs 太狠，省电 + 防卡顿 */
   .orb{filter:blur(60px);opacity:.38;animation-duration:30s}
@@ -369,23 +392,59 @@ footer a:hover{color:var(--blue)}
     <h2 class="sec-title">最新文章</h2>
     <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
 
-    <div class="posts-list">
-      {%- assign blog_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
-      {%- if blog_posts.size == 0 -%}
-        <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
-      {%- else -%}
-        {%- for post in blog_posts -%}
-        <a class="post-row" href="{{ post.url | relative_url }}">
-          <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
-          <div class="post-body">
-            <div class="post-title">{{ post.title }}</div>
-            <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+    {%- assign blog_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
+    {%- assign categories = "Prompt 与推理,RAG 与检索,Agent 与工具,评估与安全,模型与训练,工程实战" | split: "," -%}
+
+    {%- if blog_posts.size == 0 -%}
+      <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
+    {%- else -%}
+      {%- for cat in categories -%}
+        {%- assign cat_posts = blog_posts | where: "category", cat -%}
+        {%- if cat_posts.size > 0 -%}
+        <div class="category">
+          <div class="category-header">
+            <span class="category-title">{{ cat }}</span>
+            <span class="category-count">{{ cat_posts.size }} 篇</span>
           </div>
-          <div class="post-arrow">→</div>
-        </a>
-        {%- endfor -%}
+          <div class="posts-list">
+            {%- for post in cat_posts -%}
+            <a class="post-row" href="{{ post.url | relative_url }}">
+              <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+              <div class="post-body">
+                <div class="post-title">{{ post.title }}</div>
+                <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+              </div>
+              <div class="post-arrow">→</div>
+            </a>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} 没分类的兜底 {%- endcomment -%}
+      {%- assign uncat = blog_posts | where_exp: "p", "p.category == nil or p.category == ''" -%}
+      {%- if uncat.size > 0 -%}
+      <div class="category">
+        <div class="category-header">
+          <span class="category-title">其他</span>
+          <span class="category-count">{{ uncat.size }} 篇</span>
+        </div>
+        <div class="posts-list">
+          {%- for post in uncat -%}
+          <a class="post-row" href="{{ post.url | relative_url }}">
+            <div class="post-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+            <div class="post-body">
+              <div class="post-title">{{ post.title }}</div>
+              <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+            </div>
+            <div class="post-arrow">→</div>
+          </a>
+          {%- endfor -%}
+        </div>
+      </div>
       {%- endif -%}
-    </div>
+    {%- endif -%}
   </section>
 
   <section id="contact" class="wrap" style="text-align:center;padding-bottom:120px">

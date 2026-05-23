@@ -2,6 +2,7 @@
 layout: post
 title: Token 与上下文窗口经济学 — 让你的 AI 应用便宜又快
 date: 2026-05-20
+category: "Prompt 与推理"
 tags: [AI, Token, 性能优化, 成本]
 excerpt: 上下文窗口越来越大，但 token 越用越贵。怎么省、怎么缓存、怎么裁剪，一份工程视角的清单。
 permalink: /posts/2026-05-20-token-context-economics.html

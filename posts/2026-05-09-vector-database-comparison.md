@@ -2,6 +2,7 @@
 layout: post
 title: Vector Database 选型对比 — Pinecone / Weaviate / Qdrant / Milvus / pgvector
 date: 2026-05-09
+category: "RAG 与检索"
 tags: [AI, 向量数据库, RAG, 工程实践]
 excerpt: 主流向量数据库横评，按规模、运维、成本、生态打分，附一份决策表。
 permalink: /posts/2026-05-09-vector-database-comparison.html

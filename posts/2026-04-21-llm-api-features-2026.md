@@ -2,6 +2,7 @@
 layout: post
 title: 2026 年 AI API 新功能盘点 — Anthropic / OpenAI / Google
 date: 2026-04-21
+category: "工程实战"
 tags: [AI, API, Anthropic, OpenAI, Gemini]
 excerpt: Claude Opus 4.7、GPT-5、Gemini 2.x 各家这一年都加了什么硬货？哪些是真有用，哪些是营销话术。
 permalink: /posts/2026-04-21-llm-api-features-2026.html

@@ -2,6 +2,7 @@
 layout: post
 title: 本地 LLM 部署实战 — Ollama / vLLM / llama.cpp 怎么选
 date: 2026-05-01
+category: "工程实战"
 tags: [AI, Local LLM, 部署, 自托管]
 excerpt: 数据敏感、API 太贵、想离线跑？三种主流本地 LLM 部署方案的实战对比与选型建议。
 permalink: /posts/2026-05-01-local-llm-deployment.html

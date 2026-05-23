@@ -2,6 +2,7 @@
 layout: post
 title: Prompt Engineering 实战要点 — 写给开发者的入门到进阶
 date: 2026-05-23
+category: "Prompt 与推理"
 tags: [AI, Prompt Engineering, Claude, LLM]
 excerpt: 一份从 0 到能跑生产的 Prompt 工程实战清单 — 清晰度、示例、XML 结构、role、thinking、链式提示。
 permalink: /posts/2026-05-23-prompt-engineering-essentials.html

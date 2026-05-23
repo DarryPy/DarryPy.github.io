@@ -2,6 +2,7 @@
 layout: post
 title: LLM 安全：Prompt Injection 防御指南
 date: 2026-05-07
+category: "评估与安全"
 tags: [AI, 安全, Prompt Injection]
 excerpt: 攻击者最便宜的入口就是文本。直接注入、间接注入、工具滥用，每一种的防御思路。
 permalink: /posts/2026-05-07-prompt-injection-defense.html

@@ -2,6 +2,7 @@
 layout: post
 title: LangChain vs LangGraph vs 原生 SDK — 框架选型实战
 date: 2026-04-29
+category: "Agent 与工具"
 tags: [AI, LangChain, LangGraph, 框架]
 excerpt: LangChain 还能用吗？LangGraph 和原生 SDK 怎么选？什么时候必须上框架、什么时候反而是负担。
 permalink: /posts/2026-04-29-langchain-vs-langgraph.html

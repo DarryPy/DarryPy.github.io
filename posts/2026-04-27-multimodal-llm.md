@@ -2,6 +2,7 @@
 layout: post
 title: 多模态 LLM 实战 — Vision / Audio / 文档理解
 date: 2026-04-27
+category: "模型与训练"
 tags: [AI, 多模态, Vision, Audio]
 excerpt: GPT-4V / Claude Vision / Gemini 都能看图听音了。多模态实战要点、PDF 解析、OCR 替代、视频理解的工程模式。
 permalink: /posts/2026-04-27-multimodal-llm.html

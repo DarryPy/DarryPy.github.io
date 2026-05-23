@@ -2,6 +2,7 @@
 layout: post
 title: LLM Fine-tuning 实战 — LoRA / QLoRA / 全参微调怎么选
 date: 2026-04-25
+category: "模型与训练"
 tags: [AI, Fine-tuning, LoRA, 模型训练]
 excerpt: 真要微调的那 10% 场景，三种主流方案到底差在哪。数据集准备、训练、评估的完整流程。
 permalink: /posts/2026-04-25-llm-fine-tuning.html
