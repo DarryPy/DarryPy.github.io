@@ -16,20 +16,48 @@ kramdown:
 permalink: /:title.html
 
 plugins:
+  - jekyll-paginate-v2
   - jekyll-seo-tag
   - jekyll-feed
   - jekyll-sitemap
 
 defaults:
   - scope:
-      path: "posts"
+      path: ""
+      type: posts
     values:
       layout: post
+
+# jekyll-paginate-v2 默认配置（页面 front matter 可覆盖）
+pagination:
+  enabled: true
+  per_page: 20
+  permalink: '/page/:num/'
+  title: ':title - 第 :num 页'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
+
+# 站内已有的 6 个分类（用于侧栏渲染顺序）
+topics:
+  - { name: "Prompt 与推理",  slug: "prompt-reasoning" }
+  - { name: "RAG 与检索",    slug: "rag-retrieval" }
+  - { name: "Agent 与工具",  slug: "agent-tools" }
+  - { name: "评估与安全",     slug: "eval-safety" }
+  - { name: "模型与训练",     slug: "model-training" }
+  - { name: "工程实战",       slug: "engineering" }
 
 exclude:
   - README.md
   - .gitattributes
   - apple-app-site-association
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .github/
 
 # giscus 评论：填入下面 4 个字段即可启用。
 # 启用步骤：

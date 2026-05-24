@@ -528,9 +528,9 @@ footer a:hover{color:var(--blue)}
         <span class="kbd">⌘K</span>
       </button>
       <div class="nav-links">
-        <a href="#about">关于</a>
-        <a href="#posts">文章</a>
-        <a href="#contact">联系</a>
+        <a href="{{ '/#about' | relative_url }}">关于</a>
+        <a href="{{ '/posts/' | relative_url }}">文章</a>
+        <a href="{{ '/#contact' | relative_url }}">联系</a>
       </div>
     </div>
   </nav>
@@ -544,7 +544,7 @@ footer a:hover{color:var(--blue)}
         <button class="search-close" type="button" id="searchClose">ESC</button>
       </div>
       <div class="search-results" id="searchResults">
-        <div class="search-empty">开始输入即可搜索 — 共 {{ site.pages | where_exp: "p", "p.path contains 'posts/'" | size }} 篇文章</div>
+        <div class="search-empty">开始输入即可搜索 — 共 {{ site.posts | size }} 篇文章</div>
       </div>
     </div>
   </div>
@@ -552,8 +552,7 @@ footer a:hover{color:var(--blue)}
   <!-- 搜索索引 (Jekyll 构建时生成) -->
   <script id="searchIndex" type="application/json">
   [
-    {%- assign idx_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
-    {%- for p in idx_posts -%}
+    {%- for p in site.posts -%}
     {
       "title": {{ p.title | jsonify }},
       "excerpt": {{ p.excerpt | default: '' | strip_html | strip_newlines | jsonify }},
@@ -590,64 +589,37 @@ footer a:hover{color:var(--blue)}
     </p>
   </section>
 
-  <section id="posts" class="posts-wrap">
-    {%- assign blog_posts = site.pages | where_exp: "p", "p.path contains 'posts/'" | sort: "date" | reverse -%}
-    {%- assign topics = "Prompt 与推理,RAG 与检索,Agent 与工具,评估与安全,模型与训练,工程实战" | split: "," -%}
+  <section id="posts" class="wrap">
+    <div class="sec-tag">Posts</div>
+    <h2 class="sec-title">最新文章</h2>
+    <p class="sec-desc">折腾、思考、复盘——这里挑了最新 6 篇，全部文章见底部链接。</p>
 
-    <div class="posts-layout">
-      <aside class="topics-side" aria-label="文章分组">
-        <div class="ts-title">文章分组</div>
-        <nav class="ts-list">
-          <a class="ts-link active" data-topic="all" href="#all">
-            <span>全部</span>
-            <span class="ts-count">{{ blog_posts.size }}</span>
-          </a>
-          {%- for t in topics -%}
-            {%- assign tp = blog_posts | where: "topic", t -%}
-            {%- if tp.size > 0 -%}
-            <a class="ts-link" data-topic="{{ t }}" href="#topic-{{ forloop.index }}">
-              <span>{{ t }}</span>
-              <span class="ts-count">{{ tp.size }}</span>
-            </a>
-            {%- endif -%}
-          {%- endfor -%}
-        </nav>
-      </aside>
-
-      <div class="posts-main">
-        <div class="sec-tag">Posts</div>
-        <h2 class="sec-title">最新文章</h2>
-        <p class="sec-desc">折腾、思考、复盘——慢慢往这里塞。</p>
-
-        <div class="filter-banner" id="filterBanner">
-          <span class="filter-banner-text">当前筛选：<strong id="filterBannerName"></strong></span>
-          <button class="filter-banner-clear" type="button" id="filterBannerClear">显示全部 ×</button>
-        </div>
-
-        {%- if blog_posts.size == 0 -%}
-          <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
-        {%- else -%}
-          <div class="posts-list">
-            {%- for post in blog_posts -%}
-            {%- assign words = post.content | strip_html | number_of_words -%}
-            {%- assign minutes = words | divided_by: 300 -%}
-            {%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
-            <a class="post-row" data-topic="{{ post.topic | default: '' }}" href="{{ post.url | relative_url }}">
-              <div class="post-date">
-                <div>{{ post.date | date: "%Y-%m-%d" }}</div>
-                <div class="post-readtime">{{ minutes }} 分钟</div>
-              </div>
-              <div class="post-body">
-                <div class="post-title">{{ post.title }}</div>
-                <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
-              </div>
-              <div class="post-arrow">→</div>
-            </a>
-            {%- endfor -%}
+    {%- if site.posts.size == 0 -%}
+      <div class="post-row" style="grid-template-columns:1fr;color:var(--t3);text-align:center">还没写呢，敬请期待。</div>
+    {%- else -%}
+      <div class="posts-list">
+        {%- assign latest = site.posts | slice: 0, 6 -%}
+        {%- for post in latest -%}
+        {%- assign words = post.content | strip_html | number_of_words -%}
+        {%- assign minutes = words | divided_by: 300 -%}
+        {%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
+        <a class="post-row" href="{{ post.url | relative_url }}">
+          <div class="post-date">
+            <div>{{ post.date | date: "%Y-%m-%d" }}</div>
+            <div class="post-readtime">{{ minutes }} 分钟</div>
           </div>
-        {%- endif -%}
+          <div class="post-body">
+            <div class="post-title">{{ post.title }}</div>
+            <div class="post-excerpt">{{ post.excerpt | default: '' | strip_html | strip_newlines | truncate: 80 }}</div>
+          </div>
+          <div class="post-arrow">→</div>
+        </a>
+        {%- endfor -%}
       </div>
-    </div>
+      <div style="text-align:center;margin-top:32px">
+        <a href="{{ '/posts/' | relative_url }}" class="btn btn-ghost">查看全部 {{ site.posts.size }} 篇文章 →</a>
+      </div>
+    {%- endif -%}
   </section>
 
   <section id="contact" class="wrap" style="text-align:center;padding-bottom:120px">
@@ -809,64 +781,6 @@ footer a:hover{color:var(--blue)}
     }, { threshold: 0.12 });
     document.querySelectorAll('section .post-row, .sec-tag, .sec-title, .sec-desc')
       .forEach(el => { el.style.opacity = 0; io.observe(el); });
-
-    // 文章分组筛选（默认全部按时间倒序；点侧栏筛选）
-    (function(){
-      const links = document.querySelectorAll('.topics-side .ts-link');
-      const rows = document.querySelectorAll('.posts-main .post-row');
-      const banner = document.getElementById('filterBanner');
-      const bannerName = document.getElementById('filterBannerName');
-      const bannerClear = document.getElementById('filterBannerClear');
-      if (!links.length) return;
-
-      function applyFilter(topic){
-        // 更新侧栏选中态
-        links.forEach(l => l.classList.toggle('active', l.dataset.topic === topic));
-        // 筛选文章
-        if (!topic || topic === 'all') {
-          rows.forEach(r => r.removeAttribute('hidden'));
-          banner?.classList.remove('visible');
-        } else {
-          rows.forEach(r => {
-            if (r.dataset.topic === topic) r.removeAttribute('hidden');
-            else r.setAttribute('hidden', '');
-          });
-          if (banner && bannerName) {
-            bannerName.textContent = topic;
-            banner.classList.add('visible');
-          }
-        }
-        // 同步 URL hash（方便分享）
-        if (topic && topic !== 'all') {
-          history.replaceState(null, '', '#filter=' + encodeURIComponent(topic));
-        } else {
-          history.replaceState(null, '', location.pathname + location.search);
-        }
-      }
-
-      // 点击侧栏链接 = 筛选，不跳锚点
-      links.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          applyFilter(link.dataset.topic);
-          // 滚到文章区
-          document.getElementById('posts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-      // 清除筛选
-      bannerClear?.addEventListener('click', () => applyFilter('all'));
-
-      // 初始：如果 URL 带 #filter=xxx，应用该筛选；否则默认显示全部
-      const hash = decodeURIComponent(location.hash || '');
-      const m = hash.match(/^#filter=(.+)$/);
-      if (m) {
-        const target = m[1];
-        const has = [...links].some(l => l.dataset.topic === target);
-        applyFilter(has ? target : 'all');
-      } else {
-        applyFilter('all');
-      }
-    })();
 
     // 鼠标跟随光圈（仅 hover-capable 设备）
     (function(){
