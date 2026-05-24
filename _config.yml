@@ -67,6 +67,6 @@ exclude:
 # 4. 填到下面后重新部署
 giscus:
   repo: DarryPy/DarryPy.github.io
-  repo_id: ""
-  category: General
-  category_id: ""
+  repo_id: "R_kgDOHXeBhQ"
+  category: Announcements
+  category_id: "DIC_kwDOHXeBhc4C9tsL"
