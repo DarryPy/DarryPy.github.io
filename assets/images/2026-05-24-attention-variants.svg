@@ -1,0 +1,109 @@
+<svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MHA / MQA / GQA 三种注意力变体的 KV 头共享对比">
+  <defs>
+    <style>
+      .label { fill: #38bdf8; font: 700 15px 'JetBrains Mono', monospace; }
+      .sub { fill: #5b7693; font: 11px sans-serif; }
+      .col-head { fill: #a6c1de; font: 600 11px sans-serif; }
+      .q-box { fill: rgba(56,189,248,0.15); stroke: #38bdf8; stroke-width: 1.4; }
+      .kv-box { fill: rgba(192,132,252,0.15); stroke: #c084fc; stroke-width: 1.4; }
+      .v-box { fill: rgba(244,114,182,0.15); stroke: #f472b6; stroke-width: 1.4; }
+      .box-text { fill: #f0f8ff; font: 600 10px 'JetBrains Mono', monospace; text-anchor: middle; dominant-baseline: middle; }
+      .footnote { fill: #5b7693; font: 10.5px sans-serif; font-style: italic; }
+      .group-line { stroke: #c084fc; stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.45; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="380" y="22" text-anchor="middle" fill="#f0f8ff" font-size="13" font-weight="700" font-family="sans-serif">三种注意力变体：Q 头数不变，K/V 头数递减</text>
+
+  <!-- ============= MHA Row ============= -->
+  <g transform="translate(0, 60)">
+    <text x="20" y="22" class="label">MHA</text>
+    <text x="20" y="40" class="sub">完整多头</text>
+
+    <text x="120" y="0" class="col-head">Q × 8</text>
+    <g transform="translate(120, 8)">
+      <rect x="0"   y="0" width="32" height="28" class="q-box" rx="3"/><text x="16"  y="14" class="box-text">Q1</text>
+      <rect x="36"  y="0" width="32" height="28" class="q-box" rx="3"/><text x="52"  y="14" class="box-text">Q2</text>
+      <rect x="72"  y="0" width="32" height="28" class="q-box" rx="3"/><text x="88"  y="14" class="box-text">Q3</text>
+      <rect x="108" y="0" width="32" height="28" class="q-box" rx="3"/><text x="124" y="14" class="box-text">Q4</text>
+      <rect x="144" y="0" width="32" height="28" class="q-box" rx="3"/><text x="160" y="14" class="box-text">Q5</text>
+      <rect x="180" y="0" width="32" height="28" class="q-box" rx="3"/><text x="196" y="14" class="box-text">Q6</text>
+      <rect x="216" y="0" width="32" height="28" class="q-box" rx="3"/><text x="232" y="14" class="box-text">Q7</text>
+      <rect x="252" y="0" width="32" height="28" class="q-box" rx="3"/><text x="268" y="14" class="box-text">Q8</text>
+    </g>
+
+    <text x="450" y="0" class="col-head">K × 8 + V × 8</text>
+    <g transform="translate(450, 8)">
+      <rect x="0"   y="0" width="32" height="28" class="kv-box" rx="3"/><text x="16"  y="14" class="box-text">KV1</text>
+      <rect x="36"  y="0" width="32" height="28" class="kv-box" rx="3"/><text x="52"  y="14" class="box-text">KV2</text>
+      <rect x="72"  y="0" width="32" height="28" class="kv-box" rx="3"/><text x="88"  y="14" class="box-text">KV3</text>
+      <rect x="108" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="124" y="14" class="box-text">KV4</text>
+      <rect x="144" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="160" y="14" class="box-text">KV5</text>
+      <rect x="180" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="196" y="14" class="box-text">KV6</text>
+      <rect x="216" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="232" y="14" class="box-text">KV7</text>
+      <rect x="252" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="268" y="14" class="box-text">KV8</text>
+    </g>
+  </g>
+
+  <!-- ============= GQA Row ============= -->
+  <g transform="translate(0, 180)">
+    <text x="20" y="22" class="label">GQA-4</text>
+    <text x="20" y="40" class="sub">分组共享</text>
+    <text x="20" y="56" class="sub">(每 2 Q 共用 1 KV)</text>
+
+    <text x="120" y="0" class="col-head">Q × 8</text>
+    <g transform="translate(120, 8)">
+      <rect x="0"   y="0" width="32" height="28" class="q-box" rx="3"/><text x="16"  y="14" class="box-text">Q1</text>
+      <rect x="36"  y="0" width="32" height="28" class="q-box" rx="3"/><text x="52"  y="14" class="box-text">Q2</text>
+      <rect x="72"  y="0" width="32" height="28" class="q-box" rx="3"/><text x="88"  y="14" class="box-text">Q3</text>
+      <rect x="108" y="0" width="32" height="28" class="q-box" rx="3"/><text x="124" y="14" class="box-text">Q4</text>
+      <rect x="144" y="0" width="32" height="28" class="q-box" rx="3"/><text x="160" y="14" class="box-text">Q5</text>
+      <rect x="180" y="0" width="32" height="28" class="q-box" rx="3"/><text x="196" y="14" class="box-text">Q6</text>
+      <rect x="216" y="0" width="32" height="28" class="q-box" rx="3"/><text x="232" y="14" class="box-text">Q7</text>
+      <rect x="252" y="0" width="32" height="28" class="q-box" rx="3"/><text x="268" y="14" class="box-text">Q8</text>
+    </g>
+
+    <!-- group brackets -->
+    <path class="group-line" d="M 120 42 L 120 50 L 188 50 L 188 42"/>
+    <path class="group-line" d="M 192 42 L 192 50 L 260 50 L 260 42"/>
+    <path class="group-line" d="M 264 42 L 264 50 L 332 50 L 332 42"/>
+    <path class="group-line" d="M 336 42 L 336 50 L 404 50 L 404 42"/>
+
+    <text x="450" y="0" class="col-head">K × 4 + V × 4</text>
+    <g transform="translate(450, 8)">
+      <rect x="0"   y="0" width="32" height="28" class="kv-box" rx="3"/><text x="16"  y="14" class="box-text">KV1</text>
+      <rect x="68"  y="0" width="32" height="28" class="kv-box" rx="3"/><text x="84"  y="14" class="box-text">KV2</text>
+      <rect x="136" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="152" y="14" class="box-text">KV3</text>
+      <rect x="204" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="220" y="14" class="box-text">KV4</text>
+    </g>
+  </g>
+
+  <!-- ============= MQA Row ============= -->
+  <g transform="translate(0, 320)">
+    <text x="20" y="22" class="label">MQA</text>
+    <text x="20" y="40" class="sub">极致共享</text>
+    <text x="20" y="56" class="sub">(8 Q 共用 1 KV)</text>
+
+    <text x="120" y="0" class="col-head">Q × 8</text>
+    <g transform="translate(120, 8)">
+      <rect x="0"   y="0" width="32" height="28" class="q-box" rx="3"/><text x="16"  y="14" class="box-text">Q1</text>
+      <rect x="36"  y="0" width="32" height="28" class="q-box" rx="3"/><text x="52"  y="14" class="box-text">Q2</text>
+      <rect x="72"  y="0" width="32" height="28" class="q-box" rx="3"/><text x="88"  y="14" class="box-text">Q3</text>
+      <rect x="108" y="0" width="32" height="28" class="q-box" rx="3"/><text x="124" y="14" class="box-text">Q4</text>
+      <rect x="144" y="0" width="32" height="28" class="q-box" rx="3"/><text x="160" y="14" class="box-text">Q5</text>
+      <rect x="180" y="0" width="32" height="28" class="q-box" rx="3"/><text x="196" y="14" class="box-text">Q6</text>
+      <rect x="216" y="0" width="32" height="28" class="q-box" rx="3"/><text x="232" y="14" class="box-text">Q7</text>
+      <rect x="252" y="0" width="32" height="28" class="q-box" rx="3"/><text x="268" y="14" class="box-text">Q8</text>
+    </g>
+
+    <path class="group-line" d="M 120 42 L 120 50 L 404 50 L 404 42"/>
+
+    <text x="450" y="0" class="col-head">K × 1 + V × 1</text>
+    <g transform="translate(450, 8)">
+      <rect x="0" y="0" width="32" height="28" class="kv-box" rx="3"/><text x="16" y="14" class="box-text">KV</text>
+    </g>
+  </g>
+
+  <text x="20" y="408" class="footnote">KV cache 大小直接正比于 K/V 头数 — 这就是 GQA / MQA 推理省内存的根因</text>
+</svg>
