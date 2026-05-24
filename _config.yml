@@ -50,6 +50,7 @@ topics:
   - { name: "模型与训练",     slug: "model-training" }
   - { name: "工程实战",       slug: "engineering" }
   - { name: "情感专栏",       slug: "emotional" }
+  - { name: "职场观察",       slug: "career" }
 
 exclude:
   - README.md
