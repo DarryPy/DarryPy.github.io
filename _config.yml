@@ -49,6 +49,7 @@ topics:
   - { name: "评估与安全",     slug: "eval-safety" }
   - { name: "模型与训练",     slug: "model-training" }
   - { name: "工程实战",       slug: "engineering" }
+  - { name: "情感专栏",       slug: "emotional" }
 
 exclude:
   - README.md
