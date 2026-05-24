@@ -356,10 +356,10 @@ footer{
       <h1 class="post-h1">{{ page.title }}</h1>
       <div class="post-meta">
         <span>{{ page.date | date: "%Y-%m-%d" }}</span>
-        {%- assign words = content | strip_html | number_of_words -%}
-        {%- assign minutes = words | divided_by: 300 -%}
+        {%- assign chars = content | strip_html | strip_newlines | size -%}
+        {%- assign minutes = chars | divided_by: 400 -%}
         {%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
-        <span class="dot"></span><span>约 {{ minutes }} 分钟 · {{ words }} 字</span>
+        <span class="dot"></span><span>约 {{ minutes }} 分钟 · {{ chars }} 字</span>
         {% if page.tags %}<span class="dot"></span><span>{{ page.tags | join: " · " }}</span>{% endif %}
       </div>
     </header>

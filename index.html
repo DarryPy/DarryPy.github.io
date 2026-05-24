@@ -600,8 +600,8 @@ footer a:hover{color:var(--blue)}
       <div class="posts-list">
         {%- assign latest = site.posts | slice: 0, 6 -%}
         {%- for post in latest -%}
-        {%- assign words = post.content | strip_html | number_of_words -%}
-        {%- assign minutes = words | divided_by: 300 -%}
+        {%- assign chars = post.content | strip_html | strip_newlines | size -%}
+        {%- assign minutes = chars | divided_by: 400 -%}
         {%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
         <a class="post-row" href="{{ post.url | relative_url }}">
           <div class="post-date">
