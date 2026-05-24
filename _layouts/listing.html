@@ -297,8 +297,10 @@ footer a:hover{color:var(--blue)}
 
         {%- if paginator and paginator.total_pages > 0 -%}
           {%- assign posts_to_show = paginator.posts -%}
+        {%- elsif page.topic_filter -%}
+          {%- assign posts_to_show = site.posts | where: "topic", page.topic_filter -%}
         {%- else -%}
-          {%- assign posts_to_show = page.posts | default: site.posts -%}
+          {%- assign posts_to_show = site.posts -%}
         {%- endif -%}
 
         {%- if posts_to_show.size == 0 -%}
