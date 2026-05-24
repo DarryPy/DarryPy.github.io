@@ -273,7 +273,7 @@ footer a:hover{color:var(--blue)}
 
     <div class="listing-layout">
       <aside class="topics-side" aria-label="文章分组">
-        <div class="ts-title">文章分组</div>
+        <div class="ts-title">Topics · 专题</div>
         <nav class="ts-list">
           {%- assign all_count = site.posts | size -%}
           <a class="ts-link{% if page.topic_slug == nil %} active{% endif %}" href="{{ '/posts/' | relative_url }}">
