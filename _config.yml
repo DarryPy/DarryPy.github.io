@@ -26,7 +26,7 @@ plugins:
 #   Google Search Console → 添加资产（URL 前缀）→ 用 “HTML 标记” 方式，把 content="" 里的串填到 google。
 #   Bing Webmaster Tools  → 添加站点 → Meta 标签法 → 把 content="" 里的串填到 bing。
 webmaster_verifications:
-  google: ""
+  google: "J6gkNXzNd_mW1hntLmYfQykOSWc-wMYNASbYTOYhscY"
   bing: ""
 
 defaults:
