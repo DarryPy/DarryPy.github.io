@@ -6,6 +6,17 @@ lang: zh-CN
 twitter_username: DarryPy
 github_username: DarryPy
 
+# 站点默认 Open Graph 图片（jekyll-seo-tag 会自动用作 og:image / twitter:image）。
+# 每篇文章可在 front matter 用 image: /assets/images/xxx.png 覆盖。
+image: /assets/images/og-default.png
+logo: /assets/images/og-default.png
+
+social:
+  name: DarryPy
+  links:
+    - https://github.com/DarryPy
+    - https://twitter.com/DarryPy
+
 include: [".well-known"]
 markdown: kramdown
 kramdown:

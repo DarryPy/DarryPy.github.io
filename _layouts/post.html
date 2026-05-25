@@ -10,6 +10,81 @@
 {% seo title=false %}
 <title>{{ page.title }} · DarryPy</title>
 {% feed_meta %}
+
+{%- comment -%}
+  ===== Open Graph / Twitter / WeChat 兜底 =====
+  jekyll-seo-tag 已经吐了 og: 和 twitter: 标签，这里再补一组 fallback：
+  1. 明确指定 og:image 的尺寸（微信预览要求 ≥ 300x300，给 1200x630 表现最稳）
+  2. 旧版聚合阅读器仍读 <link rel="image_src">
+  3. og:type=article 时补 published/modified 时间，方便抓取器拿
+{%- endcomment -%}
+{%- assign post_img_path = page.image | default: site.image | default: '/assets/images/og-default.png' -%}
+{%- assign post_img_abs = post_img_path | absolute_url -%}
+{%- assign post_desc = page.excerpt | default: page.description | default: site.description | strip_html | strip_newlines | truncate: 200 -%}
+{%- assign post_modified = page.last_modified_at | default: page.date -%}
+<meta property="og:image" content="{{ post_img_abs }}" />
+<meta property="og:image:secure_url" content="{{ post_img_abs }}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{ page.title | escape }}" />
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+<meta property="article:modified_time" content="{{ post_modified | date_to_xmlschema }}" />
+<meta property="article:author" content="{{ site.author }}" />
+{%- if page.tags -%}{% for t in page.tags %}
+<meta property="article:tag" content="{{ t | escape }}" />{% endfor %}{%- endif %}
+<meta name="twitter:image" content="{{ post_img_abs }}" />
+<meta name="twitter:image:alt" content="{{ page.title | escape }}" />
+<meta itemprop="image" content="{{ post_img_abs }}" />
+<link rel="image_src" href="{{ post_img_abs }}" />
+
+{%- comment -%}
+  ===== JSON-LD: BlogPosting =====
+  jekyll-seo-tag 的 JSON-LD 只覆盖最基础字段；这里输出更完整的 BlogPosting
+  让 Google / Bing 富摘要拿得到 publisher / wordCount / keywords / image。
+{%- endcomment -%}
+{%- assign post_chars = content | strip_html | strip_newlines | size -%}
+{%- assign post_words = post_chars | divided_by: 2 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  },
+  "headline": {{ page.title | strip_html | jsonify }},
+  "description": {{ post_desc | jsonify }},
+  "image": {
+    "@type": "ImageObject",
+    "url": "{{ post_img_abs }}",
+    "width": 1200,
+    "height": 630
+  },
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ post_modified | date_to_xmlschema }}",
+  "wordCount": {{ post_words }},
+  "inLanguage": "{{ site.lang | default: 'zh-CN' }}",
+  {%- if page.tags %}
+  "keywords": {{ page.tags | join: ', ' | jsonify }},
+  {%- endif %}
+  {%- if page.topic %}
+  "articleSection": {{ page.topic | jsonify }},
+  {%- endif %}
+  "author": {
+    "@type": "Person",
+    "name": {{ site.author | jsonify }},
+    "url": "{{ '/' | absolute_url }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.logo | default: site.image | absolute_url }}"
+    }
+  }
+}
+</script>
 <style>
 :root{
   --bg-1:#06080f;
