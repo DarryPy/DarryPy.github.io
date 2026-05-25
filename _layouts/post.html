@@ -337,6 +337,116 @@ article{max-width:760px;margin:0 auto;padding:80px 24px 120px;position:relative;
 .copy-btn.copied{color:var(--green);border-color:rgba(52,211,153,.35)}
 @media (hover:none){.copy-btn{opacity:.7}}
 
+/* ===== share bar ===== */
+.post-share{
+  margin-top:56px;padding-top:28px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.post-share-label{
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--t3);font-weight:700;margin-right:6px;
+}
+.share-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--t2);
+  cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s,transform .15s;
+  font-family:inherit;
+  padding:0;
+}
+.share-btn:hover{
+  color:var(--t1);
+  border-color:var(--border-strong);
+  background:var(--surface-2);
+  transform:translateY(-2px);
+}
+.share-btn svg{width:18px;height:18px;display:block}
+.share-btn[data-share="weibo"]:hover{color:#e6162d;border-color:rgba(230,22,45,.4)}
+.share-btn[data-share="twitter"]:hover{color:#1da1f2;border-color:rgba(29,161,242,.4)}
+.share-btn[data-share="telegram"]:hover{color:#26a5e4;border-color:rgba(38,165,228,.4)}
+.share-btn[data-share="wechat"]:hover{color:#07c160;border-color:rgba(7,193,96,.4)}
+.share-btn[data-share="copy"]:hover{color:var(--blue)}
+.share-btn[data-share="copy"].copied{color:var(--green);border-color:rgba(52,211,153,.45)}
+
+/* ===== wechat QR modal ===== */
+.share-modal{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(6,8,15,.78);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  padding:24px;
+  opacity:0;transition:opacity .2s;
+}
+.share-modal.open{display:flex;opacity:1}
+.share-modal-card{
+  width:100%;max-width:340px;
+  background:linear-gradient(180deg,#101a2b 0%,#0a1322 100%);
+  border:1px solid var(--border-strong);
+  border-radius:18px;
+  padding:28px 24px;
+  text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 1px rgba(56,189,248,.08);
+}
+.share-modal-title{
+  font-size:15px;font-weight:700;color:var(--t1);
+  margin-bottom:18px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.share-modal-title svg{width:18px;height:18px;color:#07c160}
+.share-qr-wrap{
+  width:220px;height:220px;
+  margin:0 auto 16px;
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.share-qr-wrap img{width:100%;height:100%;display:block}
+.share-qr-wrap .qr-loading{
+  position:absolute;font-size:12px;color:#5b7693;
+}
+.share-modal-hint{
+  font-size:12.5px;color:var(--t3);line-height:1.7;
+  margin-bottom:18px;
+}
+.share-modal-close{
+  display:inline-block;
+  padding:8px 22px;font-size:13px;font-weight:600;
+  color:var(--t2);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  cursor:pointer;
+  transition:color .2s,border-color .2s;
+  font-family:inherit;
+}
+.share-modal-close:hover{color:var(--t1);border-color:var(--border-strong)}
+
+/* ===== toast ===== */
+.share-toast{
+  position:fixed;bottom:36px;left:50%;
+  transform:translate(-50%,16px);
+  background:var(--surface-2);
+  border:1px solid var(--border-strong);
+  color:var(--t1);
+  padding:10px 18px;
+  border-radius:10px;
+  font-size:13px;font-weight:600;
+  z-index:101;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s,transform .2s;
+  backdrop-filter:blur(12px);
+  box-shadow:0 12px 30px rgba(0,0,0,.4);
+}
+.share-toast.show{opacity:1;transform:translate(-50%,0)}
+
 /* ===== footer nav ===== */
 .post-footer{
   margin-top:64px;padding-top:32px;
@@ -442,6 +552,41 @@ footer{
     <div class="post-content">
       {{ content }}
     </div>
+
+    <div class="post-share" data-share-bar>
+      <span class="post-share-label">分享</span>
+      <button class="share-btn" type="button" data-share="weibo" title="分享到微博" aria-label="分享到微博">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.5 21q-3.5 0-6-2.05T2 13.4q0-2.2 1.7-4.45t4.95-3.6q.6-.2.95.1t.2.85q-.15.55-.2 1.1t.15.85q.15.2.55.05.4-.15 1-.4 1.05-.45 1.7-.45t.95.3q.4.4.3 1.25-.05.45.05.6.1.1.45.05 2.4-.45 4.2.7 1.95 1.25 1.95 3.95 0 3.05-2.7 5.45T10.5 21Zm.1-1.5q3 0 5-1.85t2-4.35q0-2.05-1.55-3-1.65-1-4.2-.5-.5.1-.85-.05t-.45-.65q-.1-.4 0-.7.1-.3.05-.45-.1-.25-.7-.05-.4.15-1.4.55-.8.35-1.15.45-.35.1-.7.1t-.7-.15q-.55-.2-.75-.7-.2-.55 0-1.4-2 1.15-3.05 2.85Q3 11.55 3 13.4q0 2.65 2.2 4.4 2.25 1.7 5.4 1.7ZM10.5 18q-1.85 0-3.2-1-1.35-1-1.35-2.45 0-1.45 1.35-2.45 1.35-1.05 3.2-1.05 1.9 0 3.25 1.05 1.35 1 1.35 2.45 0 1.45-1.35 2.45-1.35 1-3.25 1Zm.05-1.5q.65 0 1.05-.4t.4-1q0-.6-.4-1-.4-.45-1.05-.45-.6 0-1.05.45-.4.4-.4 1 0 .6.4 1 .45.4 1.05.4Zm-2.95.05q.25-.35.15-.7-.1-.3-.45-.4-.35-.1-.65.1-.3.15-.35.55-.1.35.1.6.25.25.6.2.4-.05.6-.35Zm9.85-7q.7-2.55-.2-3.95t-3.45-1q-.45.05-.75-.2-.3-.25-.25-.6.05-.4.4-.65.3-.25.75-.3 3.55-.45 5 1.45 1.45 1.95.65 5.05-.15.4-.5.6t-.7.1q-.4-.05-.6-.4-.2-.3-.05-.7-.05.3-.3.6Zm-3.05-1q.45-1.6-.05-2.4-.45-.85-1.85-.55-.4.05-.65-.15t-.25-.55q-.05-.35.2-.6.2-.25.6-.35 2.15-.4 3.05.85.95 1.3.25 3.7-.1.35-.4.5-.3.2-.65.1-.3-.1-.4-.4-.15-.3.05-.65.05.05.1-.05Z"/></svg>
+      </button>
+      <button class="share-btn" type="button" data-share="twitter" title="分享到 X (Twitter)" aria-label="分享到 Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </button>
+      <button class="share-btn" type="button" data-share="telegram" title="分享到 Telegram" aria-label="分享到 Telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 4.5 19 19.5q-.3 1.2-1.2 1.5-.85.3-1.65-.35l-4.3-3.15-2.1 2q-.4.4-.95.3l.35-4.5L18 7q.35-.3-.05-.5-.4-.2-.75.05L7.5 12.5l-4.3-1.35q-1.05-.3-1.05-1.1 0-.85 1.1-1.2l17-6.5q1.1-.5 1.75.15Z"/></svg>
+      </button>
+      <button class="share-btn" type="button" data-share="wechat" title="分享到微信" aria-label="分享到微信">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 4Q6.7 4 4.85 5.6 3 7.2 3 9.5q0 1.35.7 2.5.7 1.15 1.95 1.95L5 16l2.4-1.3q.7.2 1.5.3.05 0 .15.05-.2-.7-.2-1.45 0-2.15 1.85-3.65T15.2 8.5q.65 0 1.3.1Q15.95 6.5 13.9 5.25T9.5 4Zm-2 3q.45 0 .75.3.3.3.3.75 0 .4-.3.7-.3.3-.75.3-.4 0-.7-.3-.3-.3-.3-.7 0-.45.3-.75.3-.3.7-.3Zm4 0q.45 0 .75.3.3.3.3.75 0 .4-.3.7-.3.3-.75.3-.4 0-.7-.3-.3-.3-.3-.7 0-.45.3-.75.3-.3.7-.3Zm3.7 3.5q-2.4 0-4.1 1.3-1.7 1.3-1.7 3.1 0 1.85 1.7 3.15Q12.8 19.35 15.2 19.35q.55 0 1.05-.1L18.5 20.5l-.45-2q.95-.65 1.5-1.55T20 15q0-1.85-1.7-3.15-1.7-1.3-4.1-1.35Zm-1.7 2.5q.35 0 .6.25.25.25.25.6 0 .35-.25.6-.25.25-.6.25-.4 0-.65-.25-.25-.25-.25-.6 0-.35.25-.6.25-.25.65-.25Zm3.5 0q.35 0 .6.25.25.25.25.6 0 .35-.25.6-.25.25-.6.25-.4 0-.65-.25-.25-.25-.25-.6 0-.35.25-.6.25-.25.65-.25Z"/></svg>
+      </button>
+      <button class="share-btn" type="button" data-share="copy" title="复制链接" aria-label="复制链接">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
+    </div>
+
+    <div class="share-modal" id="wechat-share-modal" aria-hidden="true">
+      <div class="share-modal-card" role="dialog" aria-label="微信分享二维码">
+        <div class="share-modal-title">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 4Q6.7 4 4.85 5.6 3 7.2 3 9.5q0 1.35.7 2.5.7 1.15 1.95 1.95L5 16l2.4-1.3q.7.2 1.5.3.05 0 .15.05-.2-.7-.2-1.45 0-2.15 1.85-3.65T15.2 8.5q.65 0 1.3.1Q15.95 6.5 13.9 5.25T9.5 4Zm5.7 6.5q-2.4 0-4.1 1.3-1.7 1.3-1.7 3.1 0 1.85 1.7 3.15Q12.8 19.35 15.2 19.35q.55 0 1.05-.1L18.5 20.5l-.45-2q.95-.65 1.5-1.55T20 15q0-1.85-1.7-3.15-1.7-1.3-4.1-1.35Z"/></svg>
+          微信扫码分享
+        </div>
+        <div class="share-qr-wrap">
+          <span class="qr-loading">生成中…</span>
+          <img class="share-qr-img" alt="" />
+        </div>
+        <div class="share-modal-hint">用微信「扫一扫」<br/>扫描后在微信中打开/转发</div>
+        <button type="button" class="share-modal-close">关闭</button>
+      </div>
+    </div>
+    <div class="share-toast" id="share-toast" role="status" aria-live="polite"></div>
 
     <div class="post-footer">
       <a href="/">← 回首页</a>
@@ -557,6 +702,80 @@ footer{
         });
       },{rootMargin:'-15% 0px -70% 0px'});
       headings.forEach(h=>io.observe(h));
+    })();
+
+    // ===== 分享按钮 =====
+    (function(){
+      const bar=document.querySelector('[data-share-bar]');
+      if(!bar)return;
+      const url=location.href.split('#')[0];
+      const title=document.title;
+      const toast=document.getElementById('share-toast');
+      const showToast=msg=>{
+        if(!toast)return;
+        toast.textContent=msg;
+        toast.classList.add('show');
+        clearTimeout(showToast._t);
+        showToast._t=setTimeout(()=>toast.classList.remove('show'),1800);
+      };
+      const openCenter=(u)=>{
+        const w=600,h=520;
+        const x=screen.width/2-w/2,y=screen.height/2-h/2;
+        window.open(u,'_blank',`width=${w},height=${h},left=${x},top=${y},noopener,noreferrer`);
+      };
+      const modal=document.getElementById('wechat-share-modal');
+      const qrImg=modal&&modal.querySelector('.share-qr-img');
+      const qrLoading=modal&&modal.querySelector('.qr-loading');
+      const openWechat=()=>{
+        if(!modal)return;
+        if(qrImg){
+          qrImg.style.opacity='0';
+          if(qrLoading)qrLoading.style.display='block';
+          qrImg.onload=()=>{qrImg.style.opacity='1';if(qrLoading)qrLoading.style.display='none'};
+          qrImg.onerror=()=>{if(qrLoading)qrLoading.textContent='二维码加载失败'};
+          qrImg.src='https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=8&data='+encodeURIComponent(url);
+        }
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+      };
+      const closeWechat=()=>{
+        if(!modal)return;
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+      };
+      if(modal){
+        modal.addEventListener('click',e=>{if(e.target===modal)closeWechat()});
+        const closeBtn=modal.querySelector('.share-modal-close');
+        if(closeBtn)closeBtn.addEventListener('click',closeWechat);
+        document.addEventListener('keydown',e=>{if(e.key==='Escape')closeWechat()});
+      }
+      const copyLink=async(btn)=>{
+        try{
+          await navigator.clipboard.writeText(url);
+          btn&&btn.classList.add('copied');
+          showToast('链接已复制 ✓');
+          setTimeout(()=>btn&&btn.classList.remove('copied'),1500);
+        }catch(e){
+          const ta=document.createElement('textarea');
+          ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
+          document.body.appendChild(ta);ta.select();
+          try{document.execCommand('copy');showToast('链接已复制 ✓')}
+          catch(_){showToast('复制失败，请手动复制')}
+          document.body.removeChild(ta);
+        }
+      };
+      bar.addEventListener('click',e=>{
+        const btn=e.target.closest('.share-btn');
+        if(!btn)return;
+        const kind=btn.dataset.share;
+        const u=encodeURIComponent(url);
+        const t=encodeURIComponent(title);
+        if(kind==='weibo')      openCenter(`https://service.weibo.com/share/share.php?url=${u}&title=${t}`);
+        else if(kind==='twitter') openCenter(`https://twitter.com/intent/tweet?url=${u}&text=${t}`);
+        else if(kind==='telegram')openCenter(`https://t.me/share/url?url=${u}&text=${t}`);
+        else if(kind==='wechat') openWechat();
+        else if(kind==='copy')   copyLink(btn);
+      });
     })();
   </script>
 </body>
