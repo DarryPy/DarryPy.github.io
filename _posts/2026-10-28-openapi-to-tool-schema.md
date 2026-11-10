@@ -73,7 +73,7 @@ def dispatch(spec, args):
     for name, val in args.items():
         loc = spec["loc"][name]        # path/query/body
         if loc == "path":
-            url = url.replace("{%s}" % name, str(val))
+            url = url.replace("{" + name + "}", str(val))
         elif loc == "query":
             query[name] = val
         else:
